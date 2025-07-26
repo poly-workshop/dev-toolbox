@@ -109,58 +109,61 @@ export function TimestampPage() {
       <div className="space-y-6">
         {/* Operation mode selection */}
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              {t('tools.timestamp.operationMode')}
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center justify-between text-lg">
+              <div className="flex items-center gap-2">
+                <Clock className="h-5 w-5 text-blue-600" />
+                {t('tools.timestamp.operationMode')}
+              </div>
+              <Button
+                variant="default"
+                onClick={handleSwapMode}
+                className="h-8 px-4 text-sm"
+              >
+                {mode === 'timestamp-to-time' 
+                  ? t('tools.timestamp.timestampToTime') 
+                  : t('tools.timestamp.timeToTimestamp')
+                }
+              </Button>
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-4">
-              <Button
-                variant={mode === 'timestamp-to-time' ? 'default' : 'outline'}
-                onClick={() => setMode('timestamp-to-time')}
-              >
-                {t('tools.timestamp.timestampToTime')}
-              </Button>
-              <Button
-                variant={mode === 'time-to-timestamp' ? 'default' : 'outline'}
-                onClick={() => setMode('time-to-timestamp')}
-              >
-                {t('tools.timestamp.timeToTimestamp')}
-              </Button>
-            </div>
+          <CardContent className="space-y-6">
             
             {/* Configuration options */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>{t('tools.timestamp.timestampUnit')}</Label>
-                <Select
-                  value={options.unit}
-                  onValueChange={(value: TimestampUnit) => 
-                    setOptions(prev => ({ ...prev, unit: value }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="seconds">{t('tools.timestamp.seconds')}</SelectItem>
-                    <SelectItem value="milliseconds">{t('tools.timestamp.milliseconds')}</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              {mode === 'timestamp-to-time' && (
-                <div className="space-y-2">
-                  <Label>{t('tools.timestamp.timeFormat')}</Label>
+            <div className="border-t pt-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+                    {t('tools.timestamp.timestampUnit')}:
+                  </Label>
+                  <Select
+                    value={options.unit}
+                    onValueChange={(value: TimestampUnit) => 
+                      setOptions(prev => ({ ...prev, unit: value }))
+                    }
+                  >
+                    <SelectTrigger className="h-10 w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="seconds">{t('tools.timestamp.seconds')}</SelectItem>
+                      <SelectItem value="milliseconds">{t('tools.timestamp.milliseconds')}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className={`flex items-center gap-3 ${mode !== 'timestamp-to-time' ? 'opacity-50' : ''}`}>
+                  <Label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+                    {t('tools.timestamp.timeFormat')}:
+                  </Label>
                   <Select
                     value={options.format}
                     onValueChange={(value: TimeFormat) => 
                       setOptions(prev => ({ ...prev, format: value }))
                     }
+                    disabled={mode !== 'timestamp-to-time'}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-10 w-32">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -170,7 +173,7 @@ export function TimestampPage() {
                     </SelectContent>
                   </Select>
                 </div>
-              )}
+              </div>
             </div>
           </CardContent>
         </Card>
