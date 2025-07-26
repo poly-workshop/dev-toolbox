@@ -89,6 +89,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           url: route.path,
         })),
       },
+      {
+        title: t('categories.converterTools'),
+        url: "#",
+        icon: IconTransform,
+        items: getRoutesByCategory("转换工具").map(route => ({
+          title: t(`routes.${getRouteTranslationKey(route.path)}`),
+          url: route.path,
+        })),
+      },
     ],
     navSecondary: [
       {
@@ -107,11 +116,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         name: t('categories.textTools'),
         url: "/text",
         icon: IconFileText,
-      },
-      {
-        name: t('categories.converterTools'),
-        url: "/converters",
-        icon: IconTransform,
       },
       {
         name: t('categories.colorTools'),

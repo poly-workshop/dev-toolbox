@@ -107,6 +107,35 @@
     "uuid": {
       "title": "UUID Generator",
       "description": "Generate various versions of UUIDs"
+    },
+    "timestamp": {
+      "title": "Timestamp Converter",
+      "description": "Convert between timestamps and readable time formats",
+      "operationMode": "Operation Mode",
+      "timestampToTime": "Timestamp to Time",
+      "timeToTimestamp": "Time to Timestamp",
+      "timestampUnit": "Timestamp Unit",
+      "seconds": "Seconds",
+      "milliseconds": "Milliseconds",
+      "timeFormat": "Time Format",
+      "local": "Local Time",
+      "utc": "UTC Time",
+      "iso": "ISO Format",
+      "timestampInput": "Timestamp Input",
+      "timeInput": "Time Input",
+      "timeOutput": "Time Output",
+      "timestampOutput": "Timestamp Output",
+      "timestampPlaceholder": "Enter timestamp...",
+      "timePlaceholder": "Enter time (e.g., 2024-01-01 12:00:00)...",
+      "timeOutputPlaceholder": "Converted time will appear here...",
+      "timestampOutputPlaceholder": "Converted timestamp will appear here...",
+      "convert": "Convert",
+      "now": "Now",
+      "timestampToTimeError": "Failed to convert timestamp to time",
+      "timeToTimestampError": "Failed to convert time to timestamp",
+      "conversionError": "Conversion failed",
+      "copySuccess": "Copied to clipboard",
+      "copyError": "Copy failed"
     }
   },
   "categories": {

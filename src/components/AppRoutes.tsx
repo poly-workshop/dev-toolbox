@@ -1,8 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { HomePage } from '@/pages/HomePage';
 import { JsonFormatterPage } from '@/pages/encoders/JsonFormatterPage';
 import { Base64Page } from '@/pages/encoders/Base64Page';
 import { UuidGeneratorPage } from '@/pages/generators/UuidGeneratorPage';
+import { TimestampPage } from '@/pages/converters/TimestampPage';
 import { useTranslation } from 'react-i18next';
 
 // 临时占位组件
@@ -52,7 +53,7 @@ export function AppRoutes() {
       <Route path="/text/counter" element={<ComingSoonPage title={t('routes.characterCounter')} />} />
       
       {/* 转换工具 */}
-      <Route path="/converters/timestamp" element={<ComingSoonPage title={t('routes.timestampConverter')} />} />
+      <Route path="/converters/timestamp" element={<TimestampPage />} />
       <Route path="/converters/number" element={<ComingSoonPage title={t('routes.numberConverter')} />} />
       
       {/* 颜色工具 */}
@@ -63,7 +64,7 @@ export function AppRoutes() {
       <Route path="/settings" element={<ComingSoonPage title={t('common.settings')} />} />
       <Route path="/help" element={<ComingSoonPage title={t('common.help')} />} />
       <Route path="/text" element={<ComingSoonPage title={t('categories.textTools')} />} />
-      <Route path="/converters" element={<ComingSoonPage title={t('categories.converterTools')} />} />
+      <Route path="/converters" element={<Navigate to="/converters/timestamp" replace />} />
       <Route path="/color" element={<ComingSoonPage title={t('categories.colorTools')} />} />
     </Routes>
   );
