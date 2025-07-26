@@ -1,0 +1,144 @@
+{
+  "common": {
+    "encode": "Encode",
+    "decode": "Decode",
+    "clear": "Clear",
+    "copy": "Copy",
+    "paste": "Paste",
+    "input": "Input",
+    "output": "Output",
+    "result": "Result",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "save": "Save",
+    "reset": "Reset",
+    "settings": "Settings",
+    "help": "Help",
+    "about": "About",
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "comingSoon": "Coming soon..."
+  },
+  "header": {
+    "title": "Dev Toolbox",
+    "toggleSidebar": "Toggle Sidebar",
+    "toggleTheme": "Toggle Theme"
+  },
+  "sidebar": {
+    "quickCreate": "Quick Create",
+    "encodingTools": "Encoding Tools",
+    "hashTools": "Hash Tools",
+    "cryptoTools": "Crypto Tools",
+    "generatorTools": "Generator Tools",
+    "textTools": "Text Tools",
+    "converterTools": "Converter Tools",
+    "colorTools": "Color Tools",
+    "documents": "Documents"
+  },
+  "tools": {
+    "base64": {
+      "title": "Base64 Encoder/Decoder",
+      "description": "Encode and decode tool supporting multiple Base64 variants",
+      "variants": {
+        "standard": "Standard Base64",
+        "urlSafe": "URL-safe Base64",
+        "noPadding": "No-padding Base64",
+        "urlSafeNoPadding": "URL-safe no-padding"
+      },
+      "variantDescriptions": {
+        "standard": "Standard Base64 (RFC 4648)",
+        "urlSafe": "URL-safe Base64 (uses - and _ instead of + and /)",
+        "noPadding": "No-padding Base64 (removes trailing = characters)",
+        "urlSafeNoPadding": "URL-safe no-padding Base64"
+      },
+      "configOptions": "Configuration Options",
+      "base64Variant": "Base64 Variant",
+      "operationMode": "Operation Mode",
+      "originalText": "Original Text",
+      "base64Encoded": "Base64 Encoded",
+      "encodedResult": "Encoded Result",
+      "decodedResult": "Decoded Result",
+      "inputPlaceholder": {
+        "encode": "Enter text to encode...",
+        "decode": "Enter Base64 string to decode..."
+      },
+      "outputPlaceholder": {
+        "encode": "Base64 encoded result will appear here...",
+        "decode": "Decoded result will appear here..."
+      },
+      "characters": "characters",
+      "compressionRatio": "Compression ratio",
+      "encodeError": "Encoding failed",
+      "decodeError": "Decoding failed",
+      "copySuccess": "Copied to clipboard",
+      "copyError": "Copy failed",
+      "usage": {
+        "title": "Usage Instructions",
+        "variantTitle": "Base64 Variant Descriptions:",
+        "standardDesc": "Uses A-Z, a-z, 0-9, +, / character set",
+        "urlSafeDesc": "Uses - and _ instead of + and / to avoid URL conflicts",
+        "noPaddingDesc": "Removes trailing = padding characters",
+        "urlSafeNoPaddingDesc": "Combines URL-safe and no-padding features",
+        "featuresTitle": "Features:",
+        "utf8Support": "Supports UTF-8 encoded text",
+        "realtime": "Real-time encoding/decoding",
+        "oneClickCopy": "One-click copy result",
+        "modeSwitch": "Encode/decode mode switching",
+        "errorHandling": "Automatic error handling and notifications"
+      }
+    },
+    "json": {
+      "title": "JSON Formatter",
+      "description": "Format, minify and validate JSON data",
+      "format": "Format",
+      "minify": "Minify",
+      "validate": "Validate",
+      "formatTool": "JSON Format Tool",
+      "minifyTool": "JSON Minify Tool",
+      "validateTool": "JSON Validate Tool"
+    },
+    "uuid": {
+      "title": "UUID Generator",
+      "description": "Generate various versions of UUIDs"
+    }
+  },
+  "categories": {
+    "encodingTools": "Encoding Tools",
+    "hashTools": "Hash Tools",
+    "cryptoTools": "Crypto Tools",
+    "generatorTools": "Generator Tools",
+    "textTools": "Text Tools",
+    "converterTools": "Converter Tools",
+    "colorTools": "Color Tools"
+  },
+  "routes": {
+    "jsonFormatter": "JSON Formatter",
+    "base64": "Base64 Encoder/Decoder",
+    "urlEncode": "URL Encoder/Decoder",
+    "md5": "MD5",
+    "sha256": "SHA256",
+    "sha512": "SHA512",
+    "aes": "AES Encryption/Decryption",
+    "rsa": "RSA Encryption/Decryption",
+    "uuidGenerator": "UUID Generator",
+    "passwordGenerator": "Password Generator",
+    "qrcodeGenerator": "QR Code Generator",
+    "textFormatter": "Text Formatter",
+    "characterCounter": "Character Counter",
+    "timestampConverter": "Timestamp Converter",
+    "numberConverter": "Number Base Converter",
+    "colorPicker": "Color Picker",
+    "colorConverter": "Color Converter"
+  },
+  "home": {
+    "welcome": "Welcome to Dev Toolbox",
+    "selectTool": "Select a tool from the left menu to get started"
+  }
+}

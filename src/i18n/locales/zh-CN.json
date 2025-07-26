@@ -1,0 +1,144 @@
+{
+  "common": {
+    "encode": "编码",
+    "decode": "解码",
+    "clear": "清空",
+    "copy": "复制",
+    "paste": "粘贴",
+    "input": "输入",
+    "output": "输出",
+    "result": "结果",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "close": "关闭",
+    "save": "保存",
+    "reset": "重置",
+    "settings": "设置",
+    "help": "帮助",
+    "about": "关于",
+    "language": "语言",
+    "theme": "主题",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "系统",
+    "comingSoon": "功能开发中，敬请期待..."
+  },
+  "header": {
+    "title": "开发工具箱",
+    "toggleSidebar": "切换侧边栏",
+    "toggleTheme": "切换主题"
+  },
+  "sidebar": {
+    "quickCreate": "快速创建",
+    "encodingTools": "编码工具",
+    "hashTools": "哈希工具",
+    "cryptoTools": "加密工具",
+    "generatorTools": "生成工具",
+    "textTools": "文本工具",
+    "converterTools": "转换工具",
+    "colorTools": "颜色工具",
+    "documents": "文档"
+  },
+  "tools": {
+    "base64": {
+      "title": "Base64 编解码",
+      "description": "支持多种 Base64 变体的编码和解码工具",
+      "variants": {
+        "standard": "标准 Base64",
+        "urlSafe": "URL 安全 Base64",
+        "noPadding": "无填充 Base64",
+        "urlSafeNoPadding": "URL 安全无填充"
+      },
+      "variantDescriptions": {
+        "standard": "标准 Base64 (RFC 4648)",
+        "urlSafe": "URL 安全 Base64 (使用 - 和 _ 替代 + 和 /)",
+        "noPadding": "无填充 Base64 (移除末尾的 = 字符)",
+        "urlSafeNoPadding": "URL 安全无填充 Base64"
+      },
+      "configOptions": "配置选项",
+      "base64Variant": "Base64 变体",
+      "operationMode": "操作模式",
+      "originalText": "原始文本",
+      "base64Encoded": "Base64 编码",
+      "encodedResult": "编码结果",
+      "decodedResult": "解码结果",
+      "inputPlaceholder": {
+        "encode": "请输入要编码的文本...",
+        "decode": "请输入要解码的 Base64 字符串..."
+      },
+      "outputPlaceholder": {
+        "encode": "Base64 编码结果将显示在这里...",
+        "decode": "解码结果将显示在这里..."
+      },
+      "characters": "字符",
+      "compressionRatio": "压缩率",
+      "encodeError": "编码失败",
+      "decodeError": "解码失败",
+      "copySuccess": "已复制到剪贴板",
+      "copyError": "复制失败",
+      "usage": {
+        "title": "使用说明",
+        "variantTitle": "Base64 变体说明:",
+        "standardDesc": "使用 A-Z, a-z, 0-9, +, / 字符集",
+        "urlSafeDesc": "使用 - 和 _ 替代 + 和 /，避免 URL 冲突",
+        "noPaddingDesc": "移除末尾的 = 填充字符",
+        "urlSafeNoPaddingDesc": "结合 URL 安全和无填充特性",
+        "featuresTitle": "功能特性:",
+        "utf8Support": "支持 UTF-8 编码的文本",
+        "realtime": "实时编码/解码",
+        "oneClickCopy": "一键复制结果",
+        "modeSwitch": "编码解码模式切换",
+        "errorHandling": "自动错误处理和提示"
+      }
+    },
+    "json": {
+      "title": "JSON 格式化",
+      "description": "格式化、压缩和验证 JSON 数据",
+      "format": "格式化",
+      "minify": "压缩",
+      "validate": "验证",
+      "formatTool": "JSON 格式化工具",
+      "minifyTool": "JSON 压缩工具",
+      "validateTool": "JSON 验证工具"
+    },
+    "uuid": {
+      "title": "UUID 生成",
+      "description": "生成各种版本的 UUID"
+    }
+  },
+  "categories": {
+    "encodingTools": "编码工具",
+    "hashTools": "哈希工具",
+    "cryptoTools": "加密工具",
+    "generatorTools": "生成工具",
+    "textTools": "文本工具",
+    "converterTools": "转换工具",
+    "colorTools": "颜色工具"
+  },
+  "routes": {
+    "jsonFormatter": "JSON 格式化",
+    "base64": "Base64 编解码",
+    "urlEncode": "URL 编解码",
+    "md5": "MD5",
+    "sha256": "SHA256",
+    "sha512": "SHA512",
+    "aes": "AES 加解密",
+    "rsa": "RSA 加解密",
+    "uuidGenerator": "UUID 生成",
+    "passwordGenerator": "密码生成",
+    "qrcodeGenerator": "二维码生成",
+    "textFormatter": "文本格式化",
+    "characterCounter": "字符统计",
+    "timestampConverter": "时间戳转换",
+    "numberConverter": "进制转换",
+    "colorPicker": "颜色选择器",
+    "colorConverter": "颜色转换"
+  },
+  "home": {
+    "welcome": "欢迎使用 Dev Toolbox",
+    "selectTool": "选择左侧菜单中的工具开始使用"
+  }
+}
