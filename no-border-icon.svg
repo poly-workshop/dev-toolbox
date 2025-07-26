@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;">
+    <g>
+        <g transform="matrix(0.974878,0,0,1,-53.0039,25.5804)">
+            <g transform="matrix(128,0,0,128,519.904,794.42)">
+            </g>
+            <text x="251.716px" y="794.42px" style="font-family:'ArialRoundedMTBold', 'Arial Rounded MT Bold', sans-serif;font-size:128px;fill:white;">DEV</text>
+        </g>
+        <g transform="matrix(0.965718,0,0,0.883875,99.0542,14.0289)">
+            <path d="M125.239,504.563L622.279,323.542L601.569,255.659L539.439,278.287L518.729,210.404L705.118,142.521L725.828,210.404L663.698,233.032L746.538,504.563L674.053,504.563L642.989,391.425L332.339,504.563" style="fill:none;stroke:white;stroke-width:32.41px;"/>
+        </g>
+        <g transform="matrix(1.34902,0,0,0.898816,-210.626,51.8063)">
+            <path d="M815.156,512L815.156,815.579C815.156,880.139 780.234,932.553 737.22,932.553L334.114,932.553C291.1,932.553 256.178,880.139 256.178,815.579L256.178,512L815.156,512Z" style="fill:none;stroke:white;stroke-width:26.17px;stroke-miterlimit:1.5;"/>
+        </g>
+    </g>
+</svg>
