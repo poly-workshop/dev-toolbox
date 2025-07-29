@@ -57,7 +57,7 @@ export function TimestampPage() {
     }
   };
 
-  // 只允许一个输入框可编辑，另一个只读，切换模式时自动清空
+  // Only one input box is editable at a time, the other is read-only. Automatically clear both when switching mode or options.
   useEffect(() => {
     setInput('');
     setOutput('');
