@@ -32,7 +32,7 @@ export function TimestampPage() {
   const handleConvert = async (inputText: string, from: 'timestamp' | 'time') => {
     if (!inputText.trim()) {
       if (from === 'timestamp') setOutput('');
-      if (from === 'time') setInput('');
+      if (from === 'time') setOutput('');
       return;
     }
     try {
@@ -46,26 +46,33 @@ export function TimestampPage() {
       }) as { success: boolean; result?: string; error?: string };
       if (response.success && response.result) {
         if (from === 'timestamp') setOutput(response.result);
-        if (from === 'time') setInput(response.result);
+        if (from === 'time') setOutput(response.result);
       } else {
         if (from === 'timestamp') setOutput('');
-        if (from === 'time') setInput('');
+        if (from === 'time') setOutput('');
       }
-    } catch {
+    } catch (error) {
       if (from === 'timestamp') setOutput('');
-      if (from === 'time') setInput('');
+      if (from === 'time') setOutput('');
     }
   };
 
-  // Only one input box is editable at a time, the other is read-only. Automatically clear both when switching mode or options.
+  // Only clear inputs when options change, not when mode changes
   useEffect(() => {
     setInput('');
     setOutput('');
-  }, [mode, options.unit, options.format]);
+  }, [options.unit, options.format]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setInput(value);
+    
+    // Immediately clear output if input is empty
+    if (!value.trim()) {
+      setOutput('');
+      return;
+    }
+    
     if (mode === 'timestamp-to-time') {
       handleConvert(value, 'timestamp');
     } else {
@@ -73,16 +80,16 @@ export function TimestampPage() {
     }
   };
 
-  // Re-convert when options change
+  // Clear inputs when options change
   useEffect(() => {
-    if (input.trim()) {
-      handleConvert(input, 'timestamp');
-    }
-  }, [options.unit, options.format, mode]);
+    setInput('');
+    setOutput('');
+  }, [options.unit, options.format]);
 
   const handleSwapMode = () => {
     const newMode = mode === 'timestamp-to-time' ? 'time-to-timestamp' : 'timestamp-to-time';
     setMode(newMode);
+    // Swap input and output like Base64Page does
     setInput(output);
     setOutput(input);
   };
@@ -103,16 +110,41 @@ export function TimestampPage() {
 
   const handleNow = () => {
     const now = new Date();
-    const timestamp = options.unit === 'seconds' 
-      ? Math.floor(now.getTime() / 1000).toString()
-      : now.getTime().toString();
     if (mode === 'timestamp-to-time') {
+      // In timestamp-to-time mode, fill input with timestamp
+      const timestamp = options.unit === 'seconds' 
+        ? Math.floor(now.getTime() / 1000).toString()
+        : now.getTime().toString();
       setInput(timestamp);
       handleConvert(timestamp, 'timestamp');
     } else {
-      const nowStr = now.toISOString();
-      setOutput(nowStr);
-      handleConvert(nowStr, 'time');
+      // In time-to-timestamp mode, fill input with formatted time
+      let timeStr = '';
+      switch (options.format) {
+        case 'local':
+          // Use format that matches Rust backend: YYYY-MM-DD HH:MM:SS
+          timeStr = now.getFullYear() + '-' + 
+                   String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                   String(now.getDate()).padStart(2, '0') + ' ' + 
+                   String(now.getHours()).padStart(2, '0') + ':' + 
+                   String(now.getMinutes()).padStart(2, '0') + ':' + 
+                   String(now.getSeconds()).padStart(2, '0');
+          break;
+        case 'utc':
+          // Use format that matches Rust backend: YYYY-MM-DD HH:MM:SS
+          timeStr = now.getUTCFullYear() + '-' + 
+                   String(now.getUTCMonth() + 1).padStart(2, '0') + '-' + 
+                   String(now.getUTCDate()).padStart(2, '0') + ' ' + 
+                   String(now.getUTCHours()).padStart(2, '0') + ':' + 
+                   String(now.getUTCMinutes()).padStart(2, '0') + ':' + 
+                   String(now.getUTCSeconds()).padStart(2, '0');
+          break;
+        case 'iso':
+          timeStr = now.toISOString();
+          break;
+      }
+      setInput(timeStr);
+      handleConvert(timeStr, 'time');
     }
   };
 
@@ -167,7 +199,7 @@ export function TimestampPage() {
                   </Select>
                 </div>
                 <div className="flex-1" />
-                <div className={`flex items-center gap-3 pr-6 w-[260px] justify-end ${mode !== 'timestamp-to-time' ? 'opacity-50' : ''}`}> 
+                <div className="flex items-center gap-3 pr-6 w-[260px] justify-end"> 
                   <Label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
                     {t('tools.timestamp.timeFormat')}:
                   </Label>
@@ -176,7 +208,6 @@ export function TimestampPage() {
                     onValueChange={(value: TimeFormat) => 
                       setOptions(prev => ({ ...prev, format: value }))
                     }
-                    disabled={mode !== 'timestamp-to-time'}
                   >
                     <SelectTrigger className="h-10 w-32">
                       <SelectValue />
@@ -242,7 +273,6 @@ export function TimestampPage() {
               <ResponsiveTextarea
                 value={input}
                 onChange={handleInputChange}
-                readOnly={mode === 'time-to-timestamp'}
                 placeholder={
                   mode === 'timestamp-to-time'
                     ? t('tools.timestamp.timestampPlaceholder')
@@ -274,8 +304,7 @@ export function TimestampPage() {
             <CardContent>
               <ResponsiveTextarea
                 value={output}
-                readOnly={mode === 'timestamp-to-time'}
-                onChange={handleInputChange}
+                readOnly
                 placeholder={
                   mode === 'timestamp-to-time'
                     ? t('tools.timestamp.timeOutputPlaceholder')
