@@ -286,10 +286,17 @@ export function TimestampPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
-                {mode === 'timestamp-to-time' 
-                  ? t('tools.timestamp.timeOutput') 
-                  : t('tools.timestamp.timestampOutput')
-                }
+                <div className="flex items-center gap-2">
+                  {mode === 'timestamp-to-time' ? (
+                    <Calendar className="h-5 w-5 text-blue-600" />
+                  ) : (
+                    <Hash className="h-5 w-5 text-blue-600" />
+                  )}
+                  {mode === 'timestamp-to-time' 
+                    ? t('tools.timestamp.timeOutput') 
+                    : t('tools.timestamp.timestampOutput')
+                  }
+                </div>
                 <Button
                   variant="outline"
                   size="sm"
