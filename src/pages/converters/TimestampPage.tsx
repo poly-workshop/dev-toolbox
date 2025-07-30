@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { invoke } from '@tauri-apps/api/core';
 
 type TimestampUnit = 'seconds' | 'milliseconds';
-type TimeFormat = 'local' | 'utc' | 'iso';
+type TimeFormat = 'local-readable' | 'utc-readable' | 'rfc3339' | 'iso8601-basic' | 'iso8601-extended' | 'rfc2822';
 
 interface TimestampOptions {
   unit: TimestampUnit;
@@ -25,7 +25,7 @@ export function TimestampPage() {
   const [mode, setMode] = useState<'timestamp-to-time' | 'time-to-timestamp'>('timestamp-to-time');
   const [options, setOptions] = useState<TimestampOptions>({ 
     unit: 'seconds', 
-    format: 'local' 
+    format: 'local-readable' 
   });
 
   // Use Rust backend for timestamp conversion
@@ -41,7 +41,7 @@ export function TimestampPage() {
           input: inputText,
           mode: from === 'timestamp' ? 'timestamp-to-time' : 'time-to-timestamp',
           unit: options.unit,
-          format: from === 'timestamp' ? options.format : undefined
+          format: options.format
         }
       }) as { success: boolean; result?: string; error?: string };
       if (response.success && response.result) {
@@ -108,43 +108,33 @@ export function TimestampPage() {
     }
   };
 
-  const handleNow = () => {
-    const now = new Date();
-    if (mode === 'timestamp-to-time') {
-      // In timestamp-to-time mode, fill input with timestamp
-      const timestamp = options.unit === 'seconds' 
-        ? Math.floor(now.getTime() / 1000).toString()
-        : now.getTime().toString();
-      setInput(timestamp);
-      handleConvert(timestamp, 'timestamp');
-    } else {
-      // In time-to-timestamp mode, fill input with formatted time
-      let timeStr = '';
-      switch (options.format) {
-        case 'local':
-          // Use format that matches Rust backend: YYYY-MM-DD HH:MM:SS
-          timeStr = now.getFullYear() + '-' + 
-                   String(now.getMonth() + 1).padStart(2, '0') + '-' + 
-                   String(now.getDate()).padStart(2, '0') + ' ' + 
-                   String(now.getHours()).padStart(2, '0') + ':' + 
-                   String(now.getMinutes()).padStart(2, '0') + ':' + 
-                   String(now.getSeconds()).padStart(2, '0');
-          break;
-        case 'utc':
-          // Use format that matches Rust backend: YYYY-MM-DD HH:MM:SS
-          timeStr = now.getUTCFullYear() + '-' + 
-                   String(now.getUTCMonth() + 1).padStart(2, '0') + '-' + 
-                   String(now.getUTCDate()).padStart(2, '0') + ' ' + 
-                   String(now.getUTCHours()).padStart(2, '0') + ':' + 
-                   String(now.getUTCMinutes()).padStart(2, '0') + ':' + 
-                   String(now.getUTCSeconds()).padStart(2, '0');
-          break;
-        case 'iso':
-          timeStr = now.toISOString();
-          break;
+  const handleNow = async () => {
+    try {
+      if (mode === 'timestamp-to-time') {
+        // In timestamp-to-time mode, get current timestamp from backend
+        const response = await invoke('get_current_time', {
+          unit: options.unit,
+          format: null
+        }) as { success: boolean; result?: string; error?: string };
+        
+        if (response.success && response.result) {
+          setInput(response.result);
+          handleConvert(response.result, 'timestamp');
+        }
+      } else {
+        // In time-to-timestamp mode, get formatted time from backend
+        const response = await invoke('get_current_time', {
+          unit: 'formatted',
+          format: options.format
+        }) as { success: boolean; result?: string; error?: string };
+        
+        if (response.success && response.result) {
+          setInput(response.result);
+          handleConvert(response.result, 'time');
+        }
       }
-      setInput(timeStr);
-      handleConvert(timeStr, 'time');
+    } catch (error) {
+      toast.error(t('tools.timestamp.conversionError'));
     }
   };
 
@@ -199,7 +189,7 @@ export function TimestampPage() {
                   </Select>
                 </div>
                 <div className="flex-1" />
-                <div className="flex items-center gap-3 pr-6 w-[260px] justify-end"> 
+                <div className="flex items-center gap-3 pr-6 w-[280px] justify-end"> 
                   <Label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
                     {t('tools.timestamp.timeFormat')}:
                   </Label>
@@ -209,13 +199,16 @@ export function TimestampPage() {
                       setOptions(prev => ({ ...prev, format: value }))
                     }
                   >
-                    <SelectTrigger className="h-10 w-32">
+                    <SelectTrigger className="h-10 w-40">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="local">{t('tools.timestamp.local')}</SelectItem>
-                      <SelectItem value="utc">{t('tools.timestamp.utc')}</SelectItem>
-                      <SelectItem value="iso">{t('tools.timestamp.iso')}</SelectItem>
+                      <SelectItem value="local-readable">{t('tools.timestamp.localReadable')}</SelectItem>
+                      <SelectItem value="utc-readable">{t('tools.timestamp.utcReadable')}</SelectItem>
+                      <SelectItem value="rfc3339">{t('tools.timestamp.rfc3339')}</SelectItem>
+                      <SelectItem value="iso8601-basic">{t('tools.timestamp.iso8601Basic')}</SelectItem>
+                      <SelectItem value="iso8601-extended">{t('tools.timestamp.iso8601Extended')}</SelectItem>
+                      <SelectItem value="rfc2822">{t('tools.timestamp.rfc2822')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
