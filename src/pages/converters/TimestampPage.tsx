@@ -108,6 +108,30 @@ export function TimestampPage() {
     }
   };
 
+  const getTimePlaceholder = () => {
+    if (mode === 'timestamp-to-time') {
+      return t('tools.timestamp.timestampPlaceholder');
+    } else {
+      // Return different placeholders based on time format
+      switch (options.format) {
+        case 'local-readable':
+          return t('tools.timestamp.timePlaceholderLocalReadable');
+        case 'utc-readable':
+          return t('tools.timestamp.timePlaceholderUtcReadable');
+        case 'rfc3339':
+          return t('tools.timestamp.timePlaceholderRfc3339');
+        case 'iso8601-basic':
+          return t('tools.timestamp.timePlaceholderIso8601Basic');
+        case 'iso8601-extended':
+          return t('tools.timestamp.timePlaceholderIso8601Extended');
+        case 'rfc2822':
+          return t('tools.timestamp.timePlaceholderRfc2822');
+        default:
+          return t('tools.timestamp.timePlaceholder');
+      }
+    }
+  };
+
   const handleNow = async () => {
     try {
       if (mode === 'timestamp-to-time') {
@@ -266,11 +290,7 @@ export function TimestampPage() {
               <ResponsiveTextarea
                 value={input}
                 onChange={handleInputChange}
-                placeholder={
-                  mode === 'timestamp-to-time'
-                    ? t('tools.timestamp.timestampPlaceholder')
-                    : t('tools.timestamp.timePlaceholder')
-                }
+                placeholder={getTimePlaceholder()}
                 className="min-h-[140px] resize-none text-base"
               />
             </CardContent>
