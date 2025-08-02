@@ -11,7 +11,7 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <BrowserRouter>
-        <div className="min-h-screen w-full">
+        <div className="h-screen w-full overflow-hidden">
           <Layout />
         </div>
         <Toaster />

@@ -13,21 +13,21 @@ export default function Layout() {
         {
           "--sidebar-width": isMobile ? "100%" : "calc(var(--spacing) * 72)",
           "--sidebar-width-mobile": "100%",
-          "--header-height": "calc(var(--spacing) * 12)",
+          "--header-height": "3rem",
         } as React.CSSProperties
       }
       defaultOpen={!isMobile}
     >
       <AppSidebar variant="inset" />
-      <SidebarInset className="min-h-screen">
+      <SidebarInset className="h-screen flex flex-col">
         <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col">
-            <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6">
+        <main className="flex-1 overflow-auto">
+          <div className="@container/main h-full">
+            <div className="p-4 sm:p-6">
               <AppRoutes />
             </div>
           </div>
-        </div>
+        </main>
       </SidebarInset>
     </SidebarProvider>
   );

@@ -116,7 +116,58 @@
   }
   body {
     @apply bg-background text-foreground;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
   }
+  
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/* 滚动条样式优化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.556 0 0 / 0.4);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.556 0 0 / 0.6);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* 黑暗模式下的滚动条样式 */
+.dark ::-webkit-scrollbar-thumb {
+  background: oklch(0.708 0 0 / 0.4);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.708 0 0 / 0.6);
+}
+
+/* Firefox 滚动条样式 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.556 0 0 / 0.4) transparent;
+}
+
+.dark * {
+  scrollbar-color: oklch(0.708 0 0 / 0.4) transparent;
 }
 
 /* 响应式优化 */
