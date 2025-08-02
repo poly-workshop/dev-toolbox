@@ -1,8 +1,11 @@
-import "./App.css"
-import { BrowserRouter } from "react-router-dom"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "sonner"
-import Layout from "./pages/Layout"
+import "./App.css";
+
+import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "sonner";
+
+import { ThemeProvider } from "@/components/theme-provider";
+
+import Layout from "./pages/Layout";
 
 function App() {
   return (
@@ -14,7 +17,7 @@ function App() {
         <Toaster />
       </BrowserRouter>
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

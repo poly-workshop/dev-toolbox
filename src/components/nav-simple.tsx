@@ -1,6 +1,7 @@
-import { Link, useLocation } from "react-router-dom"
-import { type Icon } from "@tabler/icons-react"
-import { cn } from "@/lib/utils"
+import { type Icon } from "@tabler/icons-react";
+import { Link, useLocation } from "react-router-dom";
+
+import { cn } from "@/lib/utils";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -8,13 +9,13 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 interface SimpleNavItem {
-  name?: string
-  title?: string
-  url: string
-  icon?: Icon
+  name?: string;
+  title?: string;
+  url: string;
+  icon?: Icon;
 }
 
 export function NavSimple({
@@ -22,12 +23,12 @@ export function NavSimple({
   title,
   className,
 }: {
-  items: SimpleNavItem[]
-  title?: string
-  className?: string
+  items: SimpleNavItem[];
+  title?: string;
+  className?: string;
 }) {
-  const location = useLocation()
-  const isActive = (url: string) => location.pathname === url
+  const location = useLocation();
+  const isActive = (url: string) => location.pathname === url;
 
   return (
     <SidebarGroup className={className}>
@@ -35,13 +36,14 @@ export function NavSimple({
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => {
-            const displayTitle = item.name || item.title || ''
+            const displayTitle = item.name || item.title || "";
             return (
               <SidebarMenuItem key={displayTitle}>
-                <SidebarMenuButton 
+                <SidebarMenuButton
                   asChild
                   className={cn(
-                    isActive(item.url) && "bg-sidebar-accent text-sidebar-accent-foreground"
+                    isActive(item.url) &&
+                      "bg-sidebar-accent text-sidebar-accent-foreground",
                   )}
                 >
                   <Link to={item.url}>
@@ -50,10 +52,10 @@ export function NavSimple({
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            )
+            );
           })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }

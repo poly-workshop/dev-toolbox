@@ -1,14 +1,11 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { SiteHeader } from "@/components/site-header"
-import { AppRoutes } from "@/components/AppRoutes"
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/hooks/use-mobile";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { AppRoutes } from "@/components/AppRoutes";
+import { SiteHeader } from "@/components/site-header";
 
 export default function Layout() {
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
   return (
     <SidebarProvider
@@ -33,5 +30,5 @@ export default function Layout() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

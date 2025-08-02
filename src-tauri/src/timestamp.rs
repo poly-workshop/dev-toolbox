@@ -290,4 +290,4 @@ fn time_to_timestamp(time_str: &str, unit: &str, format: Option<&str>) -> Result
         "milliseconds" => Ok(timestamp.to_string()),
         _ => Err("Invalid unit".to_string()),
     }
-} 
+}

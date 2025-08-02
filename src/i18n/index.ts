@@ -1,15 +1,15 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import i18n from "i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { initReactI18next } from "react-i18next";
 
-import zhCN from './locales/zh-CN.json';
-import enUS from './locales/en-US.json';
+import enUS from "./locales/en-US.json";
+import zhCN from "./locales/zh-CN.json";
 
 const resources = {
-  'zh-CN': {
+  "zh-CN": {
     translation: zhCN,
   },
-  'en-US': {
+  "en-US": {
     translation: enUS,
   },
 };
@@ -19,14 +19,14 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'zh-CN',
+    fallbackLng: "zh-CN",
     debug: false,
-    
+
     detection: {
-      order: ['localStorage', 'navigator', 'htmlTag'],
-      caches: ['localStorage'],
+      order: ["localStorage", "navigator", "htmlTag"],
+      caches: ["localStorage"],
     },
-    
+
     interpolation: {
       escapeValue: false,
     },
