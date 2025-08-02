@@ -75,6 +75,11 @@ pnpm build      # Build for production
 
 ## Project Conventions
 
+### Code Standards
+- **All comments must be written in English** - this includes code comments, JSDoc, TODO comments, and any inline documentation
+- Use clear, descriptive English for variable names, function names, and class names
+- Keep Chinese text only for user-facing content (UI labels, error messages, etc.)
+
 ### File Naming
 - React components: PascalCase (e.g., `JsonFormatterPage.tsx`)
 - Utility files: kebab-case (e.g., `routes.ts`)
