@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { Copy, RotateCcw } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { Copy, RotateCcw, Upload, Download } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -13,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ResponsiveGrid,
   ResponsiveTextarea,
@@ -29,14 +31,22 @@ interface Base64Options {
   variant: Base64Variant;
 }
 
+type InputMode = "text" | "file";
+
 export function Base64Page() {
   const { t } = useTranslation();
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState<"encode" | "decode">("encode");
+  const [inputMode, setInputMode] = useState<InputMode>("text");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [options, setOptions] = useState<Base64Options>({
     variant: "standard",
   });
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // File size limit: 10MB
+  const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
   const base64Encode = (text: string, variant: Base64Variant): string => {
     try {
@@ -112,6 +122,123 @@ export function Base64Page() {
     }
   };
 
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error(t("tools.base64.fileTooLarge"));
+      return;
+    }
+
+    setSelectedFile(file);
+    if (mode === "encode") {
+      handleFileEncode(file);
+    }
+  };
+
+  const handleFileEncode = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const result = e.target?.result;
+        if (result instanceof ArrayBuffer) {
+          // Convert ArrayBuffer to binary string
+          const bytes = new Uint8Array(result);
+          let binary = "";
+          for (let i = 0; i < bytes.length; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          const encoded = btoa(binary);
+
+          // Apply variant formatting
+          let finalResult: string;
+          switch (options.variant) {
+            case "url-safe":
+              finalResult = encoded.replace(/\+/g, "-").replace(/\//g, "_");
+              break;
+            case "no-padding":
+              finalResult = encoded.replace(/=/g, "");
+              break;
+            case "url-safe-no-padding":
+              finalResult = encoded
+                .replace(/\+/g, "-")
+                .replace(/\//g, "_")
+                .replace(/=/g, "");
+              break;
+            default:
+              finalResult = encoded;
+          }
+
+          setOutput(finalResult);
+        }
+      } catch (error) {
+        toast.error(t("tools.base64.fileReadError"), {
+          description: (error as Error).message,
+        });
+        setOutput("");
+      }
+    };
+    reader.onerror = () => {
+      toast.error(t("tools.base64.fileReadError"));
+      setOutput("");
+    };
+    reader.readAsArrayBuffer(file);
+  };
+
+  const handleFileDownload = () => {
+    if (!output.trim()) {
+      toast.error(t("tools.base64.downloadError"));
+      return;
+    }
+
+    try {
+      // Normalize Base64 string based on variant
+      let normalized = output;
+      switch (options.variant) {
+        case "url-safe":
+          normalized = output.replace(/-/g, "+").replace(/_/g, "/");
+          break;
+        case "no-padding":
+          normalized = output;
+          break;
+        case "url-safe-no-padding":
+          normalized = output.replace(/-/g, "+").replace(/_/g, "/");
+          break;
+      }
+
+      // Add necessary padding
+      const padding = normalized.length % 4;
+      if (padding > 0) {
+        normalized += "=".repeat(4 - padding);
+      }
+
+      // Convert base64 to binary
+      const binaryString = atob(normalized);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      // Create download
+      const blob = new Blob([bytes]);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = selectedFile?.name || "decoded_file";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      toast.success(t("tools.base64.downloadSuccess"));
+    } catch (error) {
+      toast.error(t("tools.base64.downloadError"), {
+        description: (error as Error).message,
+      });
+    }
+  };
+
   const handleConvert = (inputText?: string) => {
     const textToProcess = inputText !== undefined ? inputText : input;
 
@@ -136,21 +263,49 @@ export function Base64Page() {
 
   // Re-convert when options change
   useEffect(() => {
-    if (input.trim()) {
+    if (inputMode === "text" && input.trim()) {
       handleConvert();
+    } else if (inputMode === "file" && selectedFile && mode === "encode") {
+      handleFileEncode(selectedFile);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options.variant]);
+
+  // Clear data when switching input modes
+  useEffect(() => {
+    setInput("");
+    setOutput("");
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }, [inputMode]);
 
   const handleSwapMode = () => {
     const newMode = mode === "encode" ? "decode" : "encode";
     setMode(newMode);
-    setInput(output);
-    setOutput(input);
+
+    // For text mode, swap input and output
+    if (inputMode === "text") {
+      setInput(output);
+      setOutput(input);
+    } else {
+      // For file mode, clear everything when swapping modes
+      setSelectedFile(null);
+      setOutput("");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
   };
 
   const handleClear = () => {
     setInput("");
     setOutput("");
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleCopy = async (text: string) => {
@@ -292,41 +447,106 @@ export function Base64Page() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2">
-                <ResponsiveTextarea
-                  value={input}
-                  onPaste={(e) => {
-                    e.preventDefault();
-                    const text = e.clipboardData.getData("text/plain");
-                    setInput(text);
-                    handleConvert(text);
-                  }}
-                  onChange={(e) => {
-                    setInput(e.target.value);
-                    handleConvert(e.target.value);
-                  }}
-                  placeholder={
-                    mode === "encode"
-                      ? t("tools.base64.inputPlaceholder.encode")
-                      : t("tools.base64.inputPlaceholder.decode")
-                  }
-                />
-                <div className="flex justify-between text-xs sm:text-sm text-muted-foreground">
-                  <span>
-                    {input.length} {t("tools.base64.characters")}
-                  </span>
-                  {input && (
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleCopy(input)}
-                      className="h-6 px-2"
-                    >
-                      <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
-                    </Button>
+              <Tabs
+                value={inputMode}
+                onValueChange={(value) => setInputMode(value as InputMode)}
+              >
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="text">
+                    {t("tools.base64.textInput")}
+                  </TabsTrigger>
+                  <TabsTrigger value="file">
+                    {t("tools.base64.fileInput")}
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="text" className="space-y-2">
+                  <ResponsiveTextarea
+                    value={input}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      const text = e.clipboardData.getData("text/plain");
+                      setInput(text);
+                      handleConvert(text);
+                    }}
+                    onChange={(e) => {
+                      setInput(e.target.value);
+                      handleConvert(e.target.value);
+                    }}
+                    placeholder={
+                      mode === "encode"
+                        ? t("tools.base64.inputPlaceholder.encode")
+                        : t("tools.base64.inputPlaceholder.decode")
+                    }
+                  />
+                  <div className="flex justify-between text-xs sm:text-sm text-muted-foreground">
+                    <span>
+                      {input.length} {t("tools.base64.characters")}
+                    </span>
+                    {input && (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleCopy(input)}
+                        className="h-6 px-2"
+                      >
+                        <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="file" className="space-y-2">
+                  {mode === "encode" ? (
+                    <div className="space-y-2">
+                      <Input
+                        ref={fileInputRef}
+                        type="file"
+                        onChange={handleFileSelect}
+                        className="cursor-pointer"
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        {t("tools.base64.fileSizeLimit")}
+                      </p>
+                      {selectedFile && (
+                        <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
+                          <Upload className="h-4 w-4" />
+                          <span className="text-sm">{selectedFile.name}</span>
+                          <span className="text-xs text-muted-foreground">
+                            ({(selectedFile.size / 1024).toFixed(1)} KB)
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <ResponsiveTextarea
+                        value={input}
+                        onChange={(e) => {
+                          setInput(e.target.value);
+                          handleConvert(e.target.value);
+                        }}
+                        placeholder={t("tools.base64.inputPlaceholder.decode")}
+                      />
+                      <div className="flex justify-between text-xs sm:text-sm text-muted-foreground">
+                        <span>
+                          {input.length} {t("tools.base64.characters")}
+                        </span>
+                        {input && (
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleCopy(input)}
+                            className="h-6 px-2"
+                          >
+                            <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
                   )}
-                </div>
-              </div>
+                </TabsContent>
+              </Tabs>
             </CardContent>
           </Card>
 
@@ -337,15 +557,31 @@ export function Base64Page() {
                   ? t("tools.base64.base64Encoded")
                   : t("tools.base64.decodedResult")}
               </CardTitle>
-              {output && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => handleCopy(output)}
-                >
-                  <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
-                </Button>
-              )}
+              <div className="flex gap-1 sm:gap-2">
+                {output && (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleCopy(output)}
+                    >
+                      <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                    </Button>
+                    {mode === "decode" && inputMode === "file" && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={handleFileDownload}
+                      >
+                        <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                        <span className="hidden sm:inline">
+                          {t("tools.base64.downloadFile")}
+                        </span>
+                      </Button>
+                    )}
+                  </>
+                )}
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
@@ -367,6 +603,12 @@ export function Base64Page() {
                     <span>
                       {t("tools.base64.compressionRatio")}:{" "}
                       {((output.length / input.length) * 100).toFixed(1)}%
+                    </span>
+                  )}
+                  {output && mode === "encode" && selectedFile && (
+                    <span>
+                      {t("tools.base64.compressionRatio")}:{" "}
+                      {((output.length / selectedFile.size) * 100).toFixed(1)}%
                     </span>
                   )}
                 </div>
@@ -415,6 +657,7 @@ export function Base64Page() {
                 </h4>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>• {t("tools.base64.usage.utf8Support")}</li>
+                  <li>• {t("tools.base64.usage.fileSupport")}</li>
                   <li>• {t("tools.base64.usage.realtime")}</li>
                   <li>• {t("tools.base64.usage.oneClickCopy")}</li>
                   <li>• {t("tools.base64.usage.modeSwitch")}</li>

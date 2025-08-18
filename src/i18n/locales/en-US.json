@@ -79,6 +79,17 @@
       "decodeError": "Decoding failed",
       "copySuccess": "Copied to clipboard",
       "copyError": "Copy failed",
+      "inputMode": "Input Mode",
+      "textInput": "Text",
+      "fileInput": "File",
+      "selectFile": "Select File",
+      "fileSelected": "File Selected",
+      "downloadFile": "Download File",
+      "fileSizeLimit": "File size limit: 10MB",
+      "fileTooLarge": "File is too large, please select a file smaller than 10MB",
+      "fileReadError": "Failed to read file",
+      "downloadSuccess": "File downloaded successfully",
+      "downloadError": "Failed to download file",
       "usage": {
         "title": "Usage Instructions",
         "variantTitle": "Base64 Variant Descriptions:",
@@ -91,7 +102,8 @@
         "realtime": "Real-time encoding/decoding",
         "oneClickCopy": "One-click copy result",
         "modeSwitch": "Encode/decode mode switching",
-        "errorHandling": "Automatic error handling and notifications"
+        "errorHandling": "Automatic error handling and notifications",
+        "fileSupport": "Supports file upload and download"
       }
     },
     "json": {
