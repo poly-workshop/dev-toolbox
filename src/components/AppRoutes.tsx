@@ -1,6 +1,7 @@
 import { TimestampPage } from "@/pages/converters/TimestampPage";
 import { Base64Page } from "@/pages/encoders/Base64Page";
 import { JsonFormatterPage } from "@/pages/encoders/JsonFormatterPage";
+import { UrlEncoderPage } from "@/pages/encoders/UrlEncoderPage";
 import { QRCodeGeneratorPage } from "@/pages/generators/QRCodeGeneratorPage";
 import { UuidGeneratorPage } from "@/pages/generators/UuidGeneratorPage";
 import { HomePage } from "@/pages/HomePage";
@@ -37,10 +38,7 @@ export function AppRoutes() {
       {/* Encoding Tools */}
       <Route path="/encoders/json" element={<JsonFormatterPage />} />
       <Route path="/encoders/base64" element={<Base64Page />} />
-      <Route
-        path="/encoders/url"
-        element={<ComingSoonPage title={t("routes.urlEncode")} />}
-      />
+      <Route path="/encoders/url" element={<UrlEncoderPage />} />
 
       {/* Hash Tools */}
       <Route
