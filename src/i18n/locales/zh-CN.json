@@ -79,6 +79,17 @@
       "decodeError": "解码失败",
       "copySuccess": "已复制到剪贴板",
       "copyError": "复制失败",
+      "inputMode": "输入模式",
+      "textInput": "文本",
+      "fileInput": "文件",
+      "selectFile": "选择文件",
+      "fileSelected": "已选择文件",
+      "downloadFile": "下载文件",
+      "fileSizeLimit": "文件大小限制: 10MB",
+      "fileTooLarge": "文件过大，请选择小于 10MB 的文件",
+      "fileReadError": "文件读取失败",
+      "downloadSuccess": "文件下载成功",
+      "downloadError": "文件下载失败",
       "usage": {
         "title": "使用说明",
         "variantTitle": "Base64 变体说明:",
@@ -91,7 +102,8 @@
         "realtime": "实时编码/解码",
         "oneClickCopy": "一键复制结果",
         "modeSwitch": "编码解码模式切换",
-        "errorHandling": "自动错误处理和提示"
+        "errorHandling": "自动错误处理和提示",
+        "fileSupport": "支持文件上传和下载"
       }
     },
     "json": {
