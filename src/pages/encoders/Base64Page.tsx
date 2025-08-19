@@ -281,9 +281,21 @@ export function Base64Page() {
     }
   }, [inputMode]);
 
+  // Force text mode when switching to decode mode
+  useEffect(() => {
+    if (mode === "decode" && inputMode === "file") {
+      setInputMode("text");
+    }
+  }, [mode, inputMode]);
+
   const handleSwapMode = () => {
     const newMode = mode === "encode" ? "decode" : "encode";
     setMode(newMode);
+
+    // If switching to decode mode and currently in file mode, switch to text mode
+    if (newMode === "decode" && inputMode === "file") {
+      setInputMode("text");
+    }
 
     // For text mode, swap input and output
     if (inputMode === "text") {
@@ -446,7 +458,7 @@ export function Base64Page() {
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="h-52">
               <Tabs
                 value={inputMode}
                 onValueChange={(value) => setInputMode(value as InputMode)}
@@ -455,9 +467,11 @@ export function Base64Page() {
                   <TabsTrigger value="text">
                     {t("tools.base64.textInput")}
                   </TabsTrigger>
-                  <TabsTrigger value="file">
-                    {t("tools.base64.fileInput")}
-                  </TabsTrigger>
+                  {mode === "encode" && (
+                    <TabsTrigger value="file">
+                      {t("tools.base64.fileInput")}
+                    </TabsTrigger>
+                  )}
                 </TabsList>
 
                 <TabsContent value="text" className="space-y-2">
@@ -498,7 +512,7 @@ export function Base64Page() {
 
                 <TabsContent value="file" className="space-y-2">
                   {mode === "encode" ? (
-                    <div className="space-y-2">
+                    <div className="space-y-2 flex flex-col">
                       <Input
                         ref={fileInputRef}
                         type="file"
@@ -508,15 +522,22 @@ export function Base64Page() {
                       <p className="text-xs text-muted-foreground">
                         {t("tools.base64.fileSizeLimit")}
                       </p>
-                      {selectedFile && (
-                        <div className="flex items-center gap-2 p-2 bg-muted rounded-md">
-                          <Upload className="h-4 w-4" />
-                          <span className="text-sm">{selectedFile.name}</span>
-                          <span className="text-xs text-muted-foreground">
-                            ({(selectedFile.size / 1024).toFixed(1)} KB)
-                          </span>
-                        </div>
-                      )}
+                      <div className="flex-1 flex items-center">
+                        {selectedFile && (
+                          <div className="flex items-center gap-2 p-2 bg-muted rounded-md w-full">
+                            <Upload className="h-4 w-4 flex-shrink-0" />
+                            <span
+                              className="text-sm truncate flex-1 min-w-0"
+                              title={selectedFile.name}
+                            >
+                              {selectedFile.name}
+                            </span>
+                            <span className="text-xs text-muted-foreground flex-shrink-0">
+                              ({(selectedFile.size / 1024).toFixed(1)} KB)
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   ) : (
                     <div className="space-y-2">
@@ -593,7 +614,7 @@ export function Base64Page() {
                       ? t("tools.base64.outputPlaceholder.encode")
                       : t("tools.base64.outputPlaceholder.decode")
                   }
-                  className="bg-muted"
+                  className="bg-muted min-h-44"
                 />
                 <div className="flex justify-between text-xs sm:text-sm text-muted-foreground">
                   <span>
