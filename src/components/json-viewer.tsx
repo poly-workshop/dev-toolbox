@@ -3,7 +3,7 @@ import {
   oneDark,
   oneLight,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/theme-provider";
 
 interface JsonViewerProps {
   value: string;
@@ -14,8 +14,17 @@ interface JsonViewerProps {
 export function JsonViewer({ value, placeholder, className }: JsonViewerProps) {
   const { theme } = useTheme();
 
+  // Determine actual theme - handle system theme detection
+  const getActualTheme = () => {
+    if (theme === "system") {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    return theme;
+  };
+
+  const actualTheme = getActualTheme();
   // Use dark theme for dark mode, light theme for light mode
-  const syntaxTheme = theme === "dark" ? oneDark : oneLight;
+  const syntaxTheme = actualTheme === "dark" ? oneDark : oneLight;
 
   // If no value, show placeholder
   if (!value.trim()) {
@@ -38,6 +47,7 @@ export function JsonViewer({ value, placeholder, className }: JsonViewerProps) {
           minHeight: "200px",
           fontSize: "14px",
           lineHeight: "1.5",
+          backgroundColor: actualTheme === "dark" ? "#0d1117" : "#ffffff",
         }}
         wrapLongLines={true}
         showLineNumbers={false}
