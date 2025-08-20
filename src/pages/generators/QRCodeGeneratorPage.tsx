@@ -73,7 +73,14 @@ export function QRCodeGeneratorPage() {
     } finally {
       setIsGenerating(false);
     }
-  }, [input, options]);
+  }, [
+    input,
+    options.color,
+    options.errorCorrectionLevel,
+    options.margin,
+    options.width,
+    t,
+  ]);
 
   // Generate QR code when input or options change
   useEffect(() => {
@@ -133,7 +140,9 @@ export function QRCodeGeneratorPage() {
         {/* Input Section */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm sm:text-base">{t("common.input")}</CardTitle>
+            <CardTitle className="text-sm sm:text-base">
+              {t("common.input")}
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -163,7 +172,9 @@ export function QRCodeGeneratorPage() {
         {/* Configuration Options */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm sm:text-base">{t("tools.base64.configOptions")}</CardTitle>
+            <CardTitle className="text-sm sm:text-base">
+              {t("tools.base64.configOptions")}
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -291,7 +302,9 @@ export function QRCodeGeneratorPage() {
         {/* QR Code Display */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm sm:text-base">{t("tools.qrcode.generatedQrCode")}</CardTitle>
+            <CardTitle className="text-sm sm:text-base">
+              {t("tools.qrcode.generatedQrCode")}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">

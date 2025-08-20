@@ -4,9 +4,12 @@ import { useTranslation } from "react-i18next";
 
 export function UuidGeneratorPage() {
   const { t } = useTranslation();
-  
+
   return (
-    <ToolPage title={t("tools.uuid.title")} description={t("tools.uuid.description")}>
+    <ToolPage
+      title={t("tools.uuid.title")}
+      description={t("tools.uuid.description")}
+    >
       <Card>
         <CardHeader>
           <CardTitle>{t("tools.uuid.title")}</CardTitle>
