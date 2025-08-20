@@ -15,6 +15,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { ToolPage } from "@/components/tool-page";
+import { JsonViewer } from "@/components/json-viewer";
 
 export function JsonFormatterPage() {
   const [input, setInput] = useState("");
@@ -90,7 +91,7 @@ export function JsonFormatterPage() {
     try {
       await navigator.clipboard.writeText(text);
       toast.success("Copied to clipboard");
-    } catch (error) {
+    } catch {
       toast.error("Failed to copy to clipboard");
     }
   };
@@ -169,11 +170,10 @@ export function JsonFormatterPage() {
                     </Button>
                   )}
                 </div>
-                <Textarea
+                <JsonViewer
                   value={output}
-                  readOnly
                   placeholder="格式化后的 JSON 将显示在这里..."
-                  className="min-h-[200px] font-mono bg-muted"
+                  className="min-h-[200px]"
                 />
               </div>
             </CardContent>
@@ -222,11 +222,10 @@ export function JsonFormatterPage() {
                     </Button>
                   )}
                 </div>
-                <Textarea
+                <JsonViewer
                   value={output}
-                  readOnly
                   placeholder="压缩后的 JSON 将显示在这里..."
-                  className="min-h-[200px] font-mono bg-muted"
+                  className="min-h-[200px]"
                 />
               </div>
             </CardContent>
@@ -262,11 +261,13 @@ export function JsonFormatterPage() {
 
               {/* Validation Result */}
               {validationResult && (
-                <Card className={`border-2 ${
-                  validationResult.isValid 
-                    ? "border-green-500 bg-green-50 dark:bg-green-950/20" 
-                    : "border-red-500 bg-red-50 dark:bg-red-950/20"
-                }`}>
+                <Card
+                  className={`border-2 ${
+                    validationResult.isValid
+                      ? "border-green-500 bg-green-50 dark:bg-green-950/20"
+                      : "border-red-500 bg-red-50 dark:bg-red-950/20"
+                  }`}
+                >
                   <CardContent className="pt-6">
                     <div className="flex items-start space-x-3">
                       {validationResult.isValid ? (
@@ -275,10 +276,16 @@ export function JsonFormatterPage() {
                         <X className="w-5 h-5 text-red-500 mt-0.5" />
                       )}
                       <div>
-                        <p className={`font-medium ${
-                          validationResult.isValid ? "text-green-700 dark:text-green-300" : "text-red-700 dark:text-red-300"
-                        }`}>
-                          {validationResult.isValid ? "JSON 格式正确" : "JSON 格式错误"}
+                        <p
+                          className={`font-medium ${
+                            validationResult.isValid
+                              ? "text-green-700 dark:text-green-300"
+                              : "text-red-700 dark:text-red-300"
+                          }`}
+                        >
+                          {validationResult.isValid
+                            ? "JSON 格式正确"
+                            : "JSON 格式错误"}
                         </p>
                         {validationResult.error && (
                           <p className="text-sm text-red-600 dark:text-red-400 mt-1">

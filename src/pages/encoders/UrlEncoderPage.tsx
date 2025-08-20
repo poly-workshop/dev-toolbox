@@ -33,8 +33,10 @@ export function UrlEncoderPage() {
         case "uri":
           return encodeURI(text);
         case "uri-component":
-          return encodeURIComponent(text)
-            .replace(/[!'()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
+          return encodeURIComponent(text).replace(
+            /[!'()*]/g,
+            (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
+          );
         default:
           return encodeURIComponent(text);
       }
@@ -168,7 +170,12 @@ export function UrlEncoderPage() {
 
               <div className="flex items-center space-x-2">
                 <Label>编码类型:</Label>
-                <Select value={encodingType} onValueChange={(value: EncodingType) => setEncodingType(value)}>
+                <Select
+                  value={encodingType}
+                  onValueChange={(value: EncodingType) =>
+                    setEncodingType(value)
+                  }
+                >
                   <SelectTrigger className="w-48">
                     <SelectValue />
                   </SelectTrigger>
@@ -192,7 +199,8 @@ export function UrlEncoderPage() {
             </div>
 
             <div className="text-sm text-muted-foreground">
-              <strong>当前模式:</strong> {getEncodingTypeDescription(encodingType)}
+              <strong>当前模式:</strong>{" "}
+              {getEncodingTypeDescription(encodingType)}
             </div>
           </CardContent>
         </Card>
@@ -209,9 +217,10 @@ export function UrlEncoderPage() {
               <Textarea
                 value={input}
                 onChange={(e) => handleInputChange(e.target.value)}
-                placeholder={mode === "encode" 
-                  ? "输入需要编码的 URL 或文本..." 
-                  : "输入需要解码的 URL 编码文本..."
+                placeholder={
+                  mode === "encode"
+                    ? "输入需要编码的 URL 或文本..."
+                    : "输入需要解码的 URL 编码文本..."
                 }
                 className="min-h-[120px] font-mono"
               />
@@ -220,7 +229,9 @@ export function UrlEncoderPage() {
             {/* Output */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label>输出 ({mode === "encode" ? "编码结果" : "解码结果"}):</Label>
+                <Label>
+                  输出 ({mode === "encode" ? "编码结果" : "解码结果"}):
+                </Label>
                 {output && (
                   <Button
                     onClick={() => copyToClipboard(output)}
@@ -235,9 +246,10 @@ export function UrlEncoderPage() {
               <Textarea
                 value={output}
                 readOnly
-                placeholder={mode === "encode" 
-                  ? "编码后的结果将显示在这里..." 
-                  : "解码后的结果将显示在这里..."
+                placeholder={
+                  mode === "encode"
+                    ? "编码后的结果将显示在这里..."
+                    : "解码后的结果将显示在这里..."
                 }
                 className="min-h-[120px] font-mono bg-muted"
               />
@@ -256,10 +268,12 @@ export function UrlEncoderPage() {
                 <h4 className="font-medium mb-2">编码类型说明</h4>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>
-                    <strong>URL 组件:</strong> 适用于 URL 参数值，如 ?param=value
+                    <strong>URL 组件:</strong> 适用于 URL 参数值，如
+                    ?param=value
                   </li>
                   <li>
-                    <strong>完整 URI:</strong> 适用于完整的 URL，保留 :/?#[] 等字符
+                    <strong>完整 URI:</strong> 适用于完整的 URL，保留 :/?#[]
+                    等字符
                   </li>
                   <li>
                     <strong>严格组件:</strong> 更严格的编码，包括 !'()* 字符
