@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Copy, Download, RotateCcw } from "lucide-react";
 import QRCode from "qrcode";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,6 +29,7 @@ interface QRCodeOptions {
 }
 
 export function QRCodeGeneratorPage() {
+  const { t } = useTranslation();
   const [input, setInput] = useState("");
   const [qrDataUrl, setQrDataUrl] = useState("");
   const [options, setOptions] = useState<QRCodeOptions>({
@@ -66,7 +68,7 @@ export function QRCodeGeneratorPage() {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Error generating QR code:", error);
-      toast.error("Failed to generate QR code. Please check your input.");
+      toast.error(t("tools.qrcode.generateError"));
       setQrDataUrl("");
     } finally {
       setIsGenerating(false);
@@ -85,7 +87,7 @@ export function QRCodeGeneratorPage() {
 
   const handleCopyImage = async () => {
     if (!qrDataUrl) {
-      toast.error("No QR code to copy");
+      toast.error(t("tools.qrcode.noQrCodeToCopy"));
       return;
     }
 
@@ -101,17 +103,17 @@ export function QRCodeGeneratorPage() {
         }),
       ]);
 
-      toast.success("QR code copied to clipboard");
+      toast.success(t("tools.qrcode.qrCodeCopied"));
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Error copying QR code:", error);
-      toast.error("Failed to copy QR code to clipboard");
+      toast.error(t("tools.qrcode.copyError"));
     }
   };
 
   const handleDownload = () => {
     if (!qrDataUrl) {
-      toast.error("No QR code to download");
+      toast.error(t("tools.qrcode.noQrCodeToDownload"));
       return;
     }
 
@@ -119,26 +121,26 @@ export function QRCodeGeneratorPage() {
     link.download = "qrcode.png";
     link.href = qrDataUrl;
     link.click();
-    toast.success("QR code downloaded");
+    toast.success(t("tools.qrcode.qrCodeDownloaded"));
   };
 
   return (
     <ToolPage
-      title="二维码生成器"
-      description="将文本、URL 或其他数据转换为二维码"
+      title={t("tools.qrcode.title")}
+      description={t("tools.qrcode.description")}
     >
       <div className="space-y-6">
         {/* Input Section */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm sm:text-base">输入内容</CardTitle>
+            <CardTitle className="text-sm sm:text-base">{t("common.input")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="qr-input">文本或URL</Label>
+              <Label htmlFor="qr-input">{t("tools.qrcode.textOrUrl")}</Label>
               <Textarea
                 id="qr-input"
-                placeholder="输入要生成二维码的文本、URL或其他数据..."
+                placeholder={t("tools.qrcode.inputPlaceholder")}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 className="min-h-[100px] resize-y"
@@ -152,7 +154,7 @@ export function QRCodeGeneratorPage() {
                 disabled={!input}
               >
                 <RotateCcw className="w-4 h-4 mr-2" />
-                清除
+                {t("common.clear")}
               </Button>
             </div>
           </CardContent>
@@ -161,7 +163,7 @@ export function QRCodeGeneratorPage() {
         {/* Configuration Options */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm sm:text-base">配置选项</CardTitle>
+            <CardTitle className="text-sm sm:text-base">{t("tools.base64.configOptions")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -289,7 +291,7 @@ export function QRCodeGeneratorPage() {
         {/* QR Code Display */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm sm:text-base">生成的二维码</CardTitle>
+            <CardTitle className="text-sm sm:text-base">{t("tools.qrcode.generatedQrCode")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -313,7 +315,7 @@ export function QRCodeGeneratorPage() {
                 ) : (
                   <div className="text-center">
                     <div className="text-muted-foreground">
-                      输入内容后将自动生成二维码
+                      {t("tools.qrcode.autoGenerate")}
                     </div>
                   </div>
                 )}

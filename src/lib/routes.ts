@@ -1,43 +1,43 @@
 export interface RouteConfig {
   path: string;
-  title: string;
-  category: string;
+  titleKey: string; // Changed from title to titleKey
+  categoryKey: string; // Changed from category to categoryKey
   component?: string;
 }
 
 export const routes: RouteConfig[] = [
   // Encoding Tools
-  { path: "/encoders/json", title: "JSON 格式化", category: "编码工具" },
-  { path: "/encoders/base64", title: "Base64 编解码", category: "编码工具" },
-  { path: "/encoders/url", title: "URL 编解码", category: "编码工具" },
+  { path: "/encoders/json", titleKey: "routes.jsonFormatter", categoryKey: "categories.encodingTools" },
+  { path: "/encoders/base64", titleKey: "routes.base64", categoryKey: "categories.encodingTools" },
+  { path: "/encoders/url", titleKey: "routes.urlEncode", categoryKey: "categories.encodingTools" },
 
   // Hash Tools
-  { path: "/hash/md5", title: "MD5", category: "哈希工具" },
-  { path: "/hash/sha256", title: "SHA256", category: "哈希工具" },
-  { path: "/hash/sha512", title: "SHA512", category: "哈希工具" },
+  { path: "/hash/md5", titleKey: "routes.md5", categoryKey: "categories.hashTools" },
+  { path: "/hash/sha256", titleKey: "routes.sha256", categoryKey: "categories.hashTools" },
+  { path: "/hash/sha512", titleKey: "routes.sha512", categoryKey: "categories.hashTools" },
 
   // Crypto Tools
-  { path: "/crypto/aes", title: "AES 加解密", category: "加密工具" },
-  { path: "/crypto/rsa", title: "RSA 加解密", category: "加密工具" },
+  { path: "/crypto/aes", titleKey: "routes.aes", categoryKey: "categories.cryptoTools" },
+  { path: "/crypto/rsa", titleKey: "routes.rsa", categoryKey: "categories.cryptoTools" },
 
   // Generator Tools
-  { path: "/generators/uuid", title: "UUID 生成", category: "生成工具" },
-  { path: "/generators/password", title: "密码生成", category: "生成工具" },
-  { path: "/generators/qrcode", title: "二维码生成", category: "生成工具" },
+  { path: "/generators/uuid", titleKey: "routes.uuidGenerator", categoryKey: "categories.generatorTools" },
+  { path: "/generators/password", titleKey: "routes.passwordGenerator", categoryKey: "categories.generatorTools" },
+  { path: "/generators/qrcode", titleKey: "routes.qrcodeGenerator", categoryKey: "categories.generatorTools" },
 
   // Text Tools
-  { path: "/text/formatter", title: "文本格式化", category: "文本工具" },
-  { path: "/text/counter", title: "字符统计", category: "文本工具" },
+  { path: "/text/formatter", titleKey: "routes.textFormatter", categoryKey: "categories.textTools" },
+  { path: "/text/counter", titleKey: "routes.characterCounter", categoryKey: "categories.textTools" },
 
   // Converter Tools
-  { path: "/converters/timestamp", title: "时间戳转换", category: "转换工具" },
-  { path: "/converters/number", title: "进制转换", category: "转换工具" },
+  { path: "/converters/timestamp", titleKey: "routes.timestampConverter", categoryKey: "categories.converterTools" },
+  { path: "/converters/number", titleKey: "routes.numberConverter", categoryKey: "categories.converterTools" },
 
   // Color Tools
-  { path: "/color/picker", title: "颜色选择器", category: "颜色工具" },
-  { path: "/color/converter", title: "颜色转换", category: "颜色工具" },
+  { path: "/color/picker", titleKey: "routes.colorPicker", categoryKey: "categories.colorTools" },
+  { path: "/color/converter", titleKey: "routes.colorConverter", categoryKey: "categories.colorTools" },
 ];
 
-export const getRoutesByCategory = (category: string) => {
-  return routes.filter((route) => route.category === category);
+export const getRoutesByCategory = (categoryKey: string) => {
+  return routes.filter((route) => route.categoryKey === categoryKey);
 };

@@ -114,11 +114,38 @@
       "validate": "Validate",
       "formatTool": "JSON Format Tool",
       "minifyTool": "JSON Minify Tool",
-      "validateTool": "JSON Validate Tool"
+      "validateTool": "JSON Validate Tool",
+      "indentSize": "Indent Size:",
+      "inputJson": "Input JSON:",
+      "formatResult": "Format Result:",
+      "minifyResult": "Minify Result:",
+      "inputPlaceholder": "Paste or input JSON data...",
+      "validatePlaceholder": "Paste or input JSON data to validate...",
+      "formatPlaceholder": "Formatted JSON will appear here...",
+      "minifyPlaceholder": "Minified JSON will appear here...",
+      "formatSuccess": "JSON formatted successfully",
+      "minifySuccess": "JSON minified successfully",
+      "invalidJson": "Invalid JSON",
+      "validJson": "JSON is valid",
+      "invalidJsonTitle": "JSON is invalid"
     },
     "uuid": {
       "title": "UUID Generator",
       "description": "Generate various versions of UUIDs"
+    },
+    "qrcode": {
+      "title": "QR Code Generator",
+      "description": "Convert text, URLs or other data into QR codes",
+      "textOrUrl": "Text or URL",
+      "inputPlaceholder": "Enter text, URL or other data to generate QR code...",
+      "generatedQrCode": "Generated QR Code",
+      "autoGenerate": "QR code will be automatically generated after input",
+      "generateError": "Failed to generate QR code. Please check your input.",
+      "noQrCodeToCopy": "No QR code to copy",
+      "qrCodeCopied": "QR code copied to clipboard",
+      "copyError": "Failed to copy QR code to clipboard",
+      "noQrCodeToDownload": "No QR code to download",
+      "qrCodeDownloaded": "QR code downloaded"
     },
     "timestamp": {
       "title": "Timestamp Converter",

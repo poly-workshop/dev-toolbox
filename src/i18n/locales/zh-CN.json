@@ -114,11 +114,38 @@
       "validate": "验证",
       "formatTool": "JSON 格式化工具",
       "minifyTool": "JSON 压缩工具",
-      "validateTool": "JSON 验证工具"
+      "validateTool": "JSON 验证工具",
+      "indentSize": "缩进大小:",
+      "inputJson": "输入 JSON:",
+      "formatResult": "格式化结果:",
+      "minifyResult": "压缩结果:",
+      "inputPlaceholder": "粘贴或输入 JSON 数据...",
+      "validatePlaceholder": "粘贴或输入需要验证的 JSON 数据...",
+      "formatPlaceholder": "格式化后的 JSON 将显示在这里...",
+      "minifyPlaceholder": "压缩后的 JSON 将显示在这里...",
+      "formatSuccess": "JSON 格式化成功",
+      "minifySuccess": "JSON 压缩成功",
+      "invalidJson": "无效的 JSON",
+      "validJson": "JSON 格式正确",
+      "invalidJsonTitle": "JSON 格式错误"
     },
     "uuid": {
       "title": "UUID 生成",
       "description": "生成各种版本的 UUID"
+    },
+    "qrcode": {
+      "title": "二维码生成器",
+      "description": "将文本、URL 或其他数据转换为二维码",
+      "textOrUrl": "文本或URL",
+      "inputPlaceholder": "输入要生成二维码的文本、URL或其他数据...",
+      "generatedQrCode": "生成的二维码",
+      "autoGenerate": "输入内容后将自动生成二维码",
+      "generateError": "生成二维码失败，请检查输入内容。",
+      "noQrCodeToCopy": "没有二维码可复制",
+      "qrCodeCopied": "二维码已复制到剪贴板",
+      "copyError": "复制二维码到剪贴板失败",
+      "noQrCodeToDownload": "没有二维码可下载",
+      "qrCodeDownloaded": "二维码已下载"
     },
     "timestamp": {
       "title": "时间戳转换",

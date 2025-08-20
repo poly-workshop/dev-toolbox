@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Copy, RotateCcw, Check, X } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,6 +19,7 @@ import { ToolPage } from "@/components/tool-page";
 import { JsonViewer } from "@/components/json-viewer";
 
 export function JsonFormatterPage() {
+  const { t } = useTranslation();
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [indentSize, setIndentSize] = useState("2");
@@ -37,9 +39,9 @@ export function JsonFormatterPage() {
       const parsed = JSON.parse(input);
       const formatted = JSON.stringify(parsed, null, parseInt(indentSize));
       setOutput(formatted);
-      toast.success("JSON formatted successfully");
+      toast.success(t("tools.json.formatSuccess"));
     } catch (error) {
-      toast.error("Invalid JSON", {
+      toast.error(t("tools.json.invalidJson"), {
         description: (error as Error).message,
       });
       setOutput("");
@@ -57,9 +59,9 @@ export function JsonFormatterPage() {
       const parsed = JSON.parse(input);
       const minified = JSON.stringify(parsed);
       setOutput(minified);
-      toast.success("JSON minified successfully");
+      toast.success(t("tools.json.minifySuccess"));
     } catch (error) {
-      toast.error("Invalid JSON", {
+      toast.error(t("tools.json.invalidJson"), {
         description: (error as Error).message,
       });
       setOutput("");
@@ -76,11 +78,11 @@ export function JsonFormatterPage() {
     try {
       JSON.parse(input);
       setValidationResult({ isValid: true });
-      toast.success("JSON is valid");
+      toast.success(t("tools.json.validJson"));
     } catch (error) {
       const errorMessage = (error as Error).message;
       setValidationResult({ isValid: false, error: errorMessage });
-      toast.error("JSON is invalid", {
+      toast.error(t("tools.json.invalidJsonTitle"), {
         description: errorMessage,
       });
     }
@@ -90,9 +92,9 @@ export function JsonFormatterPage() {
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      toast.success("Copied to clipboard");
+      toast.success(t("common.copy") + " " + t("common.success").toLowerCase());
     } catch {
-      toast.error("Failed to copy to clipboard");
+      toast.error(t("tools.base64.copyError"));
     }
   };
 
@@ -104,24 +106,24 @@ export function JsonFormatterPage() {
   };
 
   return (
-    <ToolPage title="JSON 格式化" description="格式化、压缩和验证 JSON 数据">
+    <ToolPage title={t("tools.json.title")} description={t("tools.json.description")}>
       <Tabs defaultValue="format" className="w-full">
         <TabsList>
-          <TabsTrigger value="format">格式化</TabsTrigger>
-          <TabsTrigger value="minify">压缩</TabsTrigger>
-          <TabsTrigger value="validate">验证</TabsTrigger>
+          <TabsTrigger value="format">{t("tools.json.format")}</TabsTrigger>
+          <TabsTrigger value="minify">{t("tools.json.minify")}</TabsTrigger>
+          <TabsTrigger value="validate">{t("tools.json.validate")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="format" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>JSON 格式化工具</CardTitle>
+              <CardTitle>{t("tools.json.formatTool")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Configuration */}
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <Label htmlFor="indent-size">缩进大小:</Label>
+                  <Label htmlFor="indent-size">{t("tools.json.indentSize")}</Label>
                   <Select value={indentSize} onValueChange={setIndentSize}>
                     <SelectTrigger className="w-20">
                       <SelectValue />
@@ -135,22 +137,22 @@ export function JsonFormatterPage() {
                 </div>
                 <div className="flex space-x-2">
                   <Button onClick={formatJson} size="sm">
-                    格式化
+                    {t("tools.json.format")}
                   </Button>
                   <Button onClick={clearAll} variant="outline" size="sm">
                     <RotateCcw className="w-4 h-4 mr-1" />
-                    清空
+                    {t("common.clear")}
                   </Button>
                 </div>
               </div>
 
               {/* Input */}
               <div className="space-y-2">
-                <Label>输入 JSON:</Label>
+                <Label>{t("tools.json.inputJson")}</Label>
                 <Textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="粘贴或输入 JSON 数据..."
+                  placeholder={t("tools.json.inputPlaceholder")}
                   className="min-h-[200px] font-mono"
                 />
               </div>
@@ -158,7 +160,7 @@ export function JsonFormatterPage() {
               {/* Output */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label>格式化结果:</Label>
+                  <Label>{t("tools.json.formatResult")}</Label>
                   {output && (
                     <Button
                       onClick={() => copyToClipboard(output)}
@@ -166,13 +168,13 @@ export function JsonFormatterPage() {
                       size="sm"
                     >
                       <Copy className="w-4 h-4 mr-1" />
-                      复制
+                      {t("common.copy")}
                     </Button>
                   )}
                 </div>
                 <JsonViewer
                   value={output}
-                  placeholder="格式化后的 JSON 将显示在这里..."
+                  placeholder={t("tools.json.formatPlaceholder")}
                   className="min-h-[200px]"
                 />
               </div>
@@ -183,26 +185,26 @@ export function JsonFormatterPage() {
         <TabsContent value="minify" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>JSON 压缩工具</CardTitle>
+              <CardTitle>{t("tools.json.minifyTool")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex space-x-2">
                 <Button onClick={minifyJson} size="sm">
-                  压缩
+                  {t("tools.json.minify")}
                 </Button>
                 <Button onClick={clearAll} variant="outline" size="sm">
                   <RotateCcw className="w-4 h-4 mr-1" />
-                  清空
+                  {t("common.clear")}
                 </Button>
               </div>
 
               {/* Input */}
               <div className="space-y-2">
-                <Label>输入 JSON:</Label>
+                <Label>{t("tools.json.inputJson")}</Label>
                 <Textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="粘贴或输入 JSON 数据..."
+                  placeholder={t("tools.json.inputPlaceholder")}
                   className="min-h-[200px] font-mono"
                 />
               </div>
@@ -210,7 +212,7 @@ export function JsonFormatterPage() {
               {/* Output */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label>压缩结果:</Label>
+                  <Label>{t("tools.json.minifyResult")}</Label>
                   {output && (
                     <Button
                       onClick={() => copyToClipboard(output)}
@@ -218,13 +220,13 @@ export function JsonFormatterPage() {
                       size="sm"
                     >
                       <Copy className="w-4 h-4 mr-1" />
-                      复制
+                      {t("common.copy")}
                     </Button>
                   )}
                 </div>
                 <JsonViewer
                   value={output}
-                  placeholder="压缩后的 JSON 将显示在这里..."
+                  placeholder={t("tools.json.minifyPlaceholder")}
                   className="min-h-[200px]"
                 />
               </div>
@@ -235,26 +237,26 @@ export function JsonFormatterPage() {
         <TabsContent value="validate" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>JSON 验证工具</CardTitle>
+              <CardTitle>{t("tools.json.validateTool")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex space-x-2">
                 <Button onClick={validateJson} size="sm">
-                  验证
+                  {t("tools.json.validate")}
                 </Button>
                 <Button onClick={clearAll} variant="outline" size="sm">
                   <RotateCcw className="w-4 h-4 mr-1" />
-                  清空
+                  {t("common.clear")}
                 </Button>
               </div>
 
               {/* Input */}
               <div className="space-y-2">
-                <Label>输入 JSON:</Label>
+                <Label>{t("tools.json.inputJson")}</Label>
                 <Textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="粘贴或输入需要验证的 JSON 数据..."
+                  placeholder={t("tools.json.validatePlaceholder")}
                   className="min-h-[200px] font-mono"
                 />
               </div>
@@ -284,8 +286,8 @@ export function JsonFormatterPage() {
                           }`}
                         >
                           {validationResult.isValid
-                            ? "JSON 格式正确"
-                            : "JSON 格式错误"}
+                            ? t("tools.json.validJson")
+                            : t("tools.json.invalidJsonTitle")}
                         </p>
                         {validationResult.error && (
                           <p className="text-sm text-red-600 dark:text-red-400 mt-1">

@@ -28,37 +28,14 @@ import { NavSimple } from "@/components/nav-simple";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useTranslation();
 
-  const getRouteTranslationKey = (path: string) => {
-    const routeMap: Record<string, string> = {
-      "/encoders/json": "jsonFormatter",
-      "/encoders/base64": "base64",
-      "/encoders/url": "urlEncode",
-      "/hash/md5": "md5",
-      "/hash/sha256": "sha256",
-      "/hash/sha512": "sha512",
-      "/crypto/aes": "aes",
-      "/crypto/rsa": "rsa",
-      "/generators/uuid": "uuidGenerator",
-      "/generators/password": "passwordGenerator",
-      "/generators/qrcode": "qrcodeGenerator",
-      "/text/formatter": "textFormatter",
-      "/text/counter": "characterCounter",
-      "/converters/timestamp": "timestampConverter",
-      "/converters/number": "numberConverter",
-      "/color/picker": "colorPicker",
-      "/color/converter": "colorConverter",
-    };
-    return routeMap[path] || path.split("/").slice(-1)[0];
-  };
-
   const data = {
     navMain: [
       {
         title: t("categories.encodingTools"),
         url: "#",
         icon: IconCode,
-        items: getRoutesByCategory("编码工具").map((route) => ({
-          title: t(`routes.${getRouteTranslationKey(route.path)}`),
+        items: getRoutesByCategory("categories.encodingTools").map((route) => ({
+          title: t(route.titleKey),
           url: route.path,
         })),
       },
@@ -66,8 +43,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: t("categories.hashTools"),
         url: "#",
         icon: IconHash,
-        items: getRoutesByCategory("哈希工具").map((route) => ({
-          title: t(`routes.${getRouteTranslationKey(route.path)}`),
+        items: getRoutesByCategory("categories.hashTools").map((route) => ({
+          title: t(route.titleKey),
           url: route.path,
         })),
       },
@@ -75,8 +52,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: t("categories.cryptoTools"),
         url: "#",
         icon: IconLock,
-        items: getRoutesByCategory("加密工具").map((route) => ({
-          title: t(`routes.${getRouteTranslationKey(route.path)}`),
+        items: getRoutesByCategory("categories.cryptoTools").map((route) => ({
+          title: t(route.titleKey),
           url: route.path,
         })),
       },
@@ -84,8 +61,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: t("categories.generatorTools"),
         url: "#",
         icon: IconKey,
-        items: getRoutesByCategory("生成工具").map((route) => ({
-          title: t(`routes.${getRouteTranslationKey(route.path)}`),
+        items: getRoutesByCategory("categories.generatorTools").map((route) => ({
+          title: t(route.titleKey),
           url: route.path,
         })),
       },
@@ -93,8 +70,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: t("categories.converterTools"),
         url: "#",
         icon: IconTransform,
-        items: getRoutesByCategory("转换工具").map((route) => ({
-          title: t(`routes.${getRouteTranslationKey(route.path)}`),
+        items: getRoutesByCategory("categories.converterTools").map((route) => ({
+          title: t(route.titleKey),
           url: route.path,
         })),
       },
