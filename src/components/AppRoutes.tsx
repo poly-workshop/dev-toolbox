@@ -1,4 +1,6 @@
 import { TimestampPage } from "@/pages/converters/TimestampPage";
+import { AESPage } from "@/pages/crypto/AESPage";
+import { RSAPage } from "@/pages/crypto/RSAPage";
 import { Base64Page } from "@/pages/encoders/Base64Page";
 import { JsonFormatterPage } from "@/pages/encoders/JsonFormatterPage";
 import { UrlEncoderPage } from "@/pages/encoders/UrlEncoderPage";
@@ -55,14 +57,8 @@ export function AppRoutes() {
       />
 
       {/* Crypto Tools */}
-      <Route
-        path="/crypto/aes"
-        element={<ComingSoonPage title={t("routes.aes")} />}
-      />
-      <Route
-        path="/crypto/rsa"
-        element={<ComingSoonPage title={t("routes.rsa")} />}
-      />
+      <Route path="/crypto/aes" element={<AESPage />} />
+      <Route path="/crypto/rsa" element={<RSAPage />} />
 
       {/* Generator Tools */}
       <Route path="/generators/uuid" element={<UuidGeneratorPage />} />
