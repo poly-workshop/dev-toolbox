@@ -148,7 +148,10 @@ export function UrlEncoderPage() {
   };
 
   return (
-    <ToolPage title={t("tools.url.title")} description={t("tools.url.description")}>
+    <ToolPage
+      title={t("tools.url.title")}
+      description={t("tools.url.description")}
+    >
       <div className="space-y-6">
         {/* Configuration */}
         <Card>
@@ -166,7 +169,9 @@ export function UrlEncoderPage() {
                   className="min-w-[100px]"
                 >
                   <ArrowUpDown className="w-4 h-4 mr-1" />
-                  {mode === "encode" ? t("tools.url.encode") : t("tools.url.decode")}
+                  {mode === "encode"
+                    ? t("tools.url.encode")
+                    : t("tools.url.decode")}
                 </Button>
               </div>
 
@@ -182,16 +187,22 @@ export function UrlEncoderPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="component">{t("tools.url.component")}</SelectItem>
+                    <SelectItem value="component">
+                      {t("tools.url.component")}
+                    </SelectItem>
                     <SelectItem value="uri">{t("tools.url.uri")}</SelectItem>
-                    <SelectItem value="uri-component">{t("tools.url.strictComponent")}</SelectItem>
+                    <SelectItem value="uri-component">
+                      {t("tools.url.strictComponent")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="flex space-x-2">
                 <Button onClick={processInput} size="sm">
-                  {mode === "encode" ? t("tools.url.encode") : t("tools.url.decode")}
+                  {mode === "encode"
+                    ? t("tools.url.encode")
+                    : t("tools.url.decode")}
                 </Button>
                 <Button onClick={clearAll} variant="outline" size="sm">
                   <RotateCcw className="w-4 h-4 mr-1" />
@@ -210,12 +221,24 @@ export function UrlEncoderPage() {
         {/* Input/Output */}
         <Card>
           <CardHeader>
-            <CardTitle>URL {mode === "encode" ? t("tools.url.encode") : t("tools.url.decode")}{t("tools.url.tool")}</CardTitle>
+            <CardTitle>
+              URL{" "}
+              {mode === "encode"
+                ? t("tools.url.encode")
+                : t("tools.url.decode")}
+              {t("tools.url.tool")}
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Input */}
             <div className="space-y-2">
-              <Label>{t("tools.url.input")} ({mode === "encode" ? t("tools.url.originalText") : t("tools.url.encodedText")}):</Label>
+              <Label>
+                {t("tools.url.input")} (
+                {mode === "encode"
+                  ? t("tools.url.originalText")
+                  : t("tools.url.encodedText")}
+                ):
+              </Label>
               <Textarea
                 value={input}
                 onChange={(e) => handleInputChange(e.target.value)}
@@ -232,7 +255,11 @@ export function UrlEncoderPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label>
-                  {t("tools.url.output")} ({mode === "encode" ? t("tools.url.encodeResult") : t("tools.url.decodeResult")}):
+                  {t("tools.url.output")} (
+                  {mode === "encode"
+                    ? t("tools.url.encodeResult")
+                    : t("tools.url.decodeResult")}
+                  ):
                 </Label>
                 {output && (
                   <Button
@@ -267,21 +294,28 @@ export function UrlEncoderPage() {
           <CardContent>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
               <div>
-                <h4 className="font-medium mb-2">{t("tools.url.typeDescription")}</h4>
+                <h4 className="font-medium mb-2">
+                  {t("tools.url.typeDescription")}
+                </h4>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>
-                    <strong>{t("tools.url.component")}:</strong> {t("tools.url.componentUsage")}
+                    <strong>{t("tools.url.component")}:</strong>{" "}
+                    {t("tools.url.componentUsage")}
                   </li>
                   <li>
-                    <strong>{t("tools.url.uri")}:</strong> {t("tools.url.uriUsage")}
+                    <strong>{t("tools.url.uri")}:</strong>{" "}
+                    {t("tools.url.uriUsage")}
                   </li>
                   <li>
-                    <strong>{t("tools.url.strictComponent")}:</strong> {t("tools.url.strictUsage")}
+                    <strong>{t("tools.url.strictComponent")}:</strong>{" "}
+                    {t("tools.url.strictUsage")}
                   </li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-medium mb-2">{t("tools.url.commonUseCases")}</h4>
+                <h4 className="font-medium mb-2">
+                  {t("tools.url.commonUseCases")}
+                </h4>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>• {t("tools.url.urlParams")}</li>
                   <li>• {t("tools.url.queryString")}</li>

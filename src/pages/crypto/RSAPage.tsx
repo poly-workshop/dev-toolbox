@@ -50,25 +50,25 @@ export function RSAPage() {
           hash: "SHA-256",
         },
         true,
-        ["encrypt", "decrypt"]
+        ["encrypt", "decrypt"],
       );
 
       const publicKeyBuffer = await crypto.subtle.exportKey(
         "spki",
-        keyPair.publicKey
+        keyPair.publicKey,
       );
       const privateKeyBuffer = await crypto.subtle.exportKey(
         "pkcs8",
-        keyPair.privateKey
+        keyPair.privateKey,
       );
 
       const publicKeyBase64 = formatKey(
         btoa(String.fromCharCode(...new Uint8Array(publicKeyBuffer))),
-        "PUBLIC"
+        "PUBLIC",
       );
       const privateKeyBase64 = formatKey(
         btoa(String.fromCharCode(...new Uint8Array(privateKeyBuffer))),
-        "PRIVATE"
+        "PRIVATE",
       );
 
       setPublicKey(publicKeyBase64);
@@ -122,7 +122,7 @@ export function RSAPage() {
         hash: "SHA-256",
       },
       false,
-      ["encrypt"]
+      ["encrypt"],
     );
   };
 
@@ -137,7 +137,7 @@ export function RSAPage() {
         hash: "SHA-256",
       },
       false,
-      ["decrypt"]
+      ["decrypt"],
     );
   };
 
@@ -153,22 +153,22 @@ export function RSAPage() {
       const data = encoder.encode(text);
 
       // RSA-OAEP has size limitations, check if text is too long
-      const maxLength = Math.floor((options.keySize / 8) - 42); // OAEP padding overhead
+      const maxLength = Math.floor(options.keySize / 8 - 42); // OAEP padding overhead
       if (data.length > maxLength) {
         throw new Error(
-          t("tools.rsa.textTooLong", { maxLength: maxLength.toString() })
+          t("tools.rsa.textTooLong", { maxLength: maxLength.toString() }),
         );
       }
 
       const encrypted = await crypto.subtle.encrypt(
         { name: "RSA-OAEP" },
         cryptoKey,
-        data
+        data,
       );
       return arrayBufferToBase64(encrypted);
     } catch (error) {
       throw new Error(
-        t("tools.rsa.encryptError") + ": " + (error as Error).message
+        t("tools.rsa.encryptError") + ": " + (error as Error).message,
       );
     }
   };
@@ -186,13 +186,13 @@ export function RSAPage() {
       const decrypted = await crypto.subtle.decrypt(
         { name: "RSA-OAEP" },
         cryptoKey,
-        encryptedData
+        encryptedData,
       );
       const decoder = new TextDecoder();
       return decoder.decode(decrypted);
     } catch (error) {
       throw new Error(
-        t("tools.rsa.decryptError") + ": " + (error as Error).message
+        t("tools.rsa.decryptError") + ": " + (error as Error).message,
       );
     }
   };
@@ -208,7 +208,7 @@ export function RSAPage() {
         hash: "SHA-256",
       },
       false,
-      ["sign"]
+      ["sign"],
     );
   };
 
@@ -223,7 +223,7 @@ export function RSAPage() {
         hash: "SHA-256",
       },
       false,
-      ["verify"]
+      ["verify"],
     );
   };
 
@@ -244,18 +244,21 @@ export function RSAPage() {
           saltLength: 32,
         },
         cryptoKey,
-        data
+        data,
       );
       return arrayBufferToBase64(signature);
     } catch (error) {
       throw new Error(
-        t("tools.rsa.signError") + ": " + (error as Error).message
+        t("tools.rsa.signError") + ": " + (error as Error).message,
       );
     }
   };
 
   // RSA signature verification
-  const rsaVerify = async (text: string, signatureBase64: string): Promise<boolean> => {
+  const rsaVerify = async (
+    text: string,
+    signatureBase64: string,
+  ): Promise<boolean> => {
     try {
       if (!publicKey.trim()) {
         throw new Error(t("tools.rsa.publicKeyRequired"));
@@ -277,12 +280,12 @@ export function RSAPage() {
         },
         cryptoKey,
         signatureData,
-        data
+        data,
       );
       return isValid;
     } catch (error) {
       throw new Error(
-        t("tools.rsa.verifyError") + ": " + (error as Error).message
+        t("tools.rsa.verifyError") + ": " + (error as Error).message,
       );
     }
   };
@@ -297,25 +300,33 @@ export function RSAPage() {
 
       try {
         switch (operation) {
-          case "encrypt":
+          case "encrypt": {
             const encrypted = await rsaEncrypt(input);
             setOutput(encrypted);
             break;
-          case "decrypt":
+          }
+          case "decrypt": {
             const decrypted = await rsaDecrypt(input);
             setOutput(decrypted);
             break;
-          case "sign":
+          }
+          case "sign": {
             const signed = await rsaSign(input);
             setOutput(signed);
             setSignature(signed);
             break;
-          case "verify":
+          }
+          case "verify": {
             const isValid = await rsaVerify(input, signature);
-            setOutput(isValid ? t("tools.rsa.signatureValid") : t("tools.rsa.signatureInvalid"));
+            setOutput(
+              isValid
+                ? t("tools.rsa.signatureValid")
+                : t("tools.rsa.signatureInvalid"),
+            );
             break;
+          }
         }
-      } catch (error) {
+      } catch {
         setOutput("");
         // Don't show error toast for empty/invalid input during typing
       }
@@ -363,7 +374,7 @@ export function RSAPage() {
   };
 
   const getMaxTextLength = () => {
-    return Math.floor((options.keySize / 8) - 42); // OAEP padding overhead
+    return Math.floor(options.keySize / 8 - 42); // OAEP padding overhead
   };
 
   return (
@@ -413,10 +424,16 @@ export function RSAPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="encrypt">{t("tools.rsa.encrypt")}</SelectItem>
-                    <SelectItem value="decrypt">{t("tools.rsa.decrypt")}</SelectItem>
+                    <SelectItem value="encrypt">
+                      {t("tools.rsa.encrypt")}
+                    </SelectItem>
+                    <SelectItem value="decrypt">
+                      {t("tools.rsa.decrypt")}
+                    </SelectItem>
                     <SelectItem value="sign">{t("tools.rsa.sign")}</SelectItem>
-                    <SelectItem value="verify">{t("tools.rsa.verify")}</SelectItem>
+                    <SelectItem value="verify">
+                      {t("tools.rsa.verify")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -428,8 +445,8 @@ export function RSAPage() {
                   className="w-full"
                 >
                   <RotateCcw className="h-4 w-4 mr-2" />
-                  {operation === "encrypt" || operation === "sign" 
-                    ? t("tools.rsa.switchToOpposite") 
+                  {operation === "encrypt" || operation === "sign"
+                    ? t("tools.rsa.switchToOpposite")
                     : t("tools.rsa.switchToOpposite")}
                 </Button>
               </div>
@@ -453,18 +470,16 @@ export function RSAPage() {
             <CardTitle className="text-sm sm:text-base">
               {t("tools.rsa.keyConfiguration")}
             </CardTitle>
-            <Button
-              onClick={generateKeyPair}
-              variant="outline"
-              className="h-8"
-            >
+            <Button onClick={generateKeyPair} variant="outline" className="h-8">
               <Key className="h-3 w-3 mr-1" />
               {t("tools.rsa.generateKeyPair")}
             </Button>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="publicKey">{t("tools.rsa.publicKey")} (PEM)</Label>
+              <Label htmlFor="publicKey">
+                {t("tools.rsa.publicKey")} (PEM)
+              </Label>
               <ResponsiveTextarea
                 id="publicKey"
                 value={publicKey}
@@ -475,7 +490,9 @@ export function RSAPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="privateKey">{t("tools.rsa.privateKey")} (PEM)</Label>
+              <Label htmlFor="privateKey">
+                {t("tools.rsa.privateKey")} (PEM)
+              </Label>
               <ResponsiveTextarea
                 id="privateKey"
                 value={privateKey}
@@ -485,9 +502,11 @@ export function RSAPage() {
               />
             </div>
 
-            {(operation === "verify") && (
+            {operation === "verify" && (
               <div className="space-y-2">
-                <Label htmlFor="signature">{t("tools.rsa.signature")} (Base64)</Label>
+                <Label htmlFor="signature">
+                  {t("tools.rsa.signature")} (Base64)
+                </Label>
                 <Input
                   id="signature"
                   type="text"
@@ -506,7 +525,10 @@ export function RSAPage() {
           <Card className="border-yellow-200 bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-950">
             <CardContent className="pt-4">
               <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                ⚠️ {t("tools.rsa.textLengthWarning", { maxLength: getMaxTextLength().toString() })}
+                ⚠️{" "}
+                {t("tools.rsa.textLengthWarning", {
+                  maxLength: getMaxTextLength().toString(),
+                })}
               </p>
             </CardContent>
           </Card>
@@ -520,8 +542,8 @@ export function RSAPage() {
                 {operation === "encrypt" || operation === "sign"
                   ? t("tools.rsa.input")
                   : operation === "decrypt"
-                  ? t("tools.rsa.ciphertext")
-                  : t("tools.rsa.message")}
+                    ? t("tools.rsa.ciphertext")
+                    : t("tools.rsa.message")}
               </CardTitle>
             </CardHeader>
             <CardContent className="h-52">
@@ -532,8 +554,8 @@ export function RSAPage() {
                   operation === "encrypt" || operation === "sign"
                     ? t("tools.rsa.inputPlaceholder")
                     : operation === "decrypt"
-                    ? t("tools.rsa.ciphertextPlaceholder")
-                    : t("tools.rsa.messagePlaceholder")
+                      ? t("tools.rsa.ciphertextPlaceholder")
+                      : t("tools.rsa.messagePlaceholder")
                 }
                 className="h-full resize-none"
               />
@@ -546,10 +568,10 @@ export function RSAPage() {
                 {operation === "encrypt"
                   ? t("tools.rsa.ciphertext")
                   : operation === "decrypt"
-                  ? t("tools.rsa.plaintext")
-                  : operation === "sign"
-                  ? t("tools.rsa.signature")
-                  : t("tools.rsa.verificationResult")}
+                    ? t("tools.rsa.plaintext")
+                    : operation === "sign"
+                      ? t("tools.rsa.signature")
+                      : t("tools.rsa.verificationResult")}
               </CardTitle>
               <Button
                 size="sm"
@@ -586,16 +608,20 @@ export function RSAPage() {
                 </h4>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>
-                    <strong>{t("tools.rsa.encrypt")}:</strong> {t("tools.rsa.usage.encryptDesc")}
+                    <strong>{t("tools.rsa.encrypt")}:</strong>{" "}
+                    {t("tools.rsa.usage.encryptDesc")}
                   </li>
                   <li>
-                    <strong>{t("tools.rsa.decrypt")}:</strong> {t("tools.rsa.usage.decryptDesc")}
+                    <strong>{t("tools.rsa.decrypt")}:</strong>{" "}
+                    {t("tools.rsa.usage.decryptDesc")}
                   </li>
                   <li>
-                    <strong>{t("tools.rsa.sign")}:</strong> {t("tools.rsa.usage.signDesc")}
+                    <strong>{t("tools.rsa.sign")}:</strong>{" "}
+                    {t("tools.rsa.usage.signDesc")}
                   </li>
                   <li>
-                    <strong>{t("tools.rsa.verify")}:</strong> {t("tools.rsa.usage.verifyDesc")}
+                    <strong>{t("tools.rsa.verify")}:</strong>{" "}
+                    {t("tools.rsa.usage.verifyDesc")}
                   </li>
                 </ul>
               </div>

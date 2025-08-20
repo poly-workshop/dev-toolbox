@@ -93,7 +93,7 @@ export function AESPage() {
       keyBuffer,
       { name: `AES-${options.mode}` },
       false,
-      ["encrypt", "decrypt"]
+      ["encrypt", "decrypt"],
     );
   };
 
@@ -113,15 +113,16 @@ export function AESPage() {
       const encoder = new TextEncoder();
       const data = encoder.encode(text);
 
-      const algorithm = options.mode === "GCM" 
-        ? { name: "AES-GCM", iv: ivBuffer }
-        : { name: "AES-CBC", iv: ivBuffer };
+      const algorithm =
+        options.mode === "GCM"
+          ? { name: "AES-GCM", iv: ivBuffer }
+          : { name: "AES-CBC", iv: ivBuffer };
 
       const encrypted = await crypto.subtle.encrypt(algorithm, cryptoKey, data);
       return uint8ArrayToBase64(new Uint8Array(encrypted));
     } catch (error) {
       throw new Error(
-        t("tools.aes.encryptError") + ": " + (error as Error).message
+        t("tools.aes.encryptError") + ": " + (error as Error).message,
       );
     }
   };
@@ -141,16 +142,21 @@ export function AESPage() {
       const ivBuffer = base64ToArrayBuffer(iv);
       const encryptedBuffer = base64ToArrayBuffer(encryptedBase64);
 
-      const algorithm = options.mode === "GCM" 
-        ? { name: "AES-GCM", iv: ivBuffer }
-        : { name: "AES-CBC", iv: ivBuffer };
+      const algorithm =
+        options.mode === "GCM"
+          ? { name: "AES-GCM", iv: ivBuffer }
+          : { name: "AES-CBC", iv: ivBuffer };
 
-      const decrypted = await crypto.subtle.decrypt(algorithm, cryptoKey, encryptedBuffer);
+      const decrypted = await crypto.subtle.decrypt(
+        algorithm,
+        cryptoKey,
+        encryptedBuffer,
+      );
       const decoder = new TextDecoder();
       return decoder.decode(decrypted);
     } catch (error) {
       throw new Error(
-        t("tools.aes.decryptError") + ": " + (error as Error).message
+        t("tools.aes.decryptError") + ": " + (error as Error).message,
       );
     }
   };
@@ -171,7 +177,7 @@ export function AESPage() {
           const result = await aesDecrypt(input);
           setOutput(result);
         }
-      } catch (error) {
+      } catch {
         setOutput("");
         // Don't show error toast for empty/invalid input during typing
       }
@@ -270,7 +276,9 @@ export function AESPage() {
                   className="w-full"
                 >
                   <RotateCcw className="h-4 w-4 mr-2" />
-                  {mode === "encrypt" ? t("common.decrypt") : t("common.encode")}
+                  {mode === "encrypt"
+                    ? t("common.decrypt")
+                    : t("common.encode")}
                 </Button>
               </div>
 
@@ -321,7 +329,8 @@ export function AESPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="iv">
-                  {t("tools.aes.iv")} (Base64) - {options.mode === "GCM" ? "12 bytes" : "16 bytes"}
+                  {t("tools.aes.iv")} (Base64) -{" "}
+                  {options.mode === "GCM" ? "12 bytes" : "16 bytes"}
                 </Label>
                 <Button
                   size="sm"

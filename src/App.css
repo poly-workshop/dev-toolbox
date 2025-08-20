@@ -120,8 +120,10 @@
     padding: 0;
     overflow: hidden;
   }
-  
-  html, body, #root {
+
+  html,
+  body,
+  #root {
     height: 100%;
     width: 100%;
   }
