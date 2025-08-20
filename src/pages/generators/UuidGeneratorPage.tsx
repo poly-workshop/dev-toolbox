@@ -1,15 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToolPage } from "@/components/tool-page";
+import { useTranslation } from "react-i18next";
 
 export function UuidGeneratorPage() {
+  const { t } = useTranslation();
+  
   return (
-    <ToolPage title="UUID 生成器" description="生成各种版本的 UUID">
+    <ToolPage title={t("tools.uuid.title")} description={t("tools.uuid.description")}>
       <Card>
         <CardHeader>
-          <CardTitle>UUID 生成</CardTitle>
+          <CardTitle>{t("tools.uuid.title")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">这里将实现 UUID 生成功能</p>
+          <p className="text-muted-foreground">{t("common.comingSoon")}</p>
         </CardContent>
       </Card>
     </ToolPage>
