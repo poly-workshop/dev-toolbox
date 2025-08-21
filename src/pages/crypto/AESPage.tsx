@@ -229,8 +229,10 @@ export function AESPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <ResponsiveGrid cols={{ mobile: 1, tablet: 2, desktop: 4 }}>
-              <div className="space-y-2">
-                <Label htmlFor="keySize">{t("tools.aes.keySize")}</Label>
+              <div className="flex items-center space-x-3">
+                <Label htmlFor="keySize" className="min-w-0 flex-shrink-0">
+                  {t("tools.aes.keySize")}
+                </Label>
                 <Select
                   value={options.keySize.toString()}
                   onValueChange={(value) =>
@@ -251,8 +253,10 @@ export function AESPage() {
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="mode">{t("tools.aes.mode")}</Label>
+              <div className="flex items-center space-x-3">
+                <Label htmlFor="keySize" className="min-w-0 flex-shrink-0">
+                  {t("tools.aes.mode")}
+                </Label>
                 <Select
                   value={options.mode}
                   onValueChange={(value) =>

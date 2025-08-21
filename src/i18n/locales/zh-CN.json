@@ -24,7 +24,9 @@
     "light": "浅色",
     "dark": "深色",
     "system": "系统",
-    "comingSoon": "功能开发中，敬请期待..."
+    "comingSoon": "功能开发中，敬请期待...",
+    "encrypt": "加密",
+    "decrypt": "解密"
   },
   "header": {
     "title": "开发工具箱",
@@ -227,41 +229,7 @@
       "conversionError": "转换失败",
       "copySuccess": "已复制到剪贴板",
       "copyError": "复制失败"
-    }
-  },
-  "categories": {
-    "encodingTools": "编码工具",
-    "hashTools": "哈希工具",
-    "cryptoTools": "加密工具",
-    "generatorTools": "生成工具",
-    "textTools": "文本工具",
-    "converterTools": "转换工具",
-    "colorTools": "颜色工具"
-  },
-  "routes": {
-    "jsonFormatter": "JSON 格式化",
-    "base64": "Base64 编解码",
-    "urlEncode": "URL 编解码",
-    "md5": "MD5",
-    "sha256": "SHA256",
-    "sha512": "SHA512",
-    "aes": "AES 加解密",
-    "rsa": "RSA 加解密",
-    "uuidGenerator": "UUID 生成",
-    "passwordGenerator": "密码生成",
-    "qrcodeGenerator": "二维码生成",
-    "textFormatter": "文本格式化",
-    "characterCounter": "字符统计",
-    "timestampConverter": "时间戳转换",
-    "numberConverter": "进制转换",
-    "colorPicker": "颜色选择器",
-    "colorConverter": "颜色转换"
-  },
-  "home": {
-    "welcome": "欢迎使用 Dev Toolbox",
-    "selectTool": "选择左侧菜单中的工具开始使用"
-  },
-  "tools": {
+    },
     "aes": {
       "title": "AES 加解密",
       "description": "高级加密标准 (AES) 文本加密解密工具",
@@ -358,5 +326,37 @@
         "secureAlgorithms": "RSA-OAEP 加密和 RSA-PSS 签名"
       }
     }
+  },
+  "categories": {
+    "encodingTools": "编码工具",
+    "hashTools": "哈希工具",
+    "cryptoTools": "加密工具",
+    "generatorTools": "生成工具",
+    "textTools": "文本工具",
+    "converterTools": "转换工具",
+    "colorTools": "颜色工具"
+  },
+  "routes": {
+    "jsonFormatter": "JSON 格式化",
+    "base64": "Base64 编解码",
+    "urlEncode": "URL 编解码",
+    "md5": "MD5",
+    "sha256": "SHA256",
+    "sha512": "SHA512",
+    "aes": "AES 加解密",
+    "rsa": "RSA 加解密",
+    "uuidGenerator": "UUID 生成",
+    "passwordGenerator": "密码生成",
+    "qrcodeGenerator": "二维码生成",
+    "textFormatter": "文本格式化",
+    "characterCounter": "字符统计",
+    "timestampConverter": "时间戳转换",
+    "numberConverter": "进制转换",
+    "colorPicker": "颜色选择器",
+    "colorConverter": "颜色转换"
+  },
+  "home": {
+    "welcome": "欢迎使用 Dev Toolbox",
+    "selectTool": "选择左侧菜单中的工具开始使用"
   }
 }

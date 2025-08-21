@@ -44,23 +44,36 @@ export function ResponsiveGrid({
   className = "",
   cols = { mobile: 1, tablet: 2, desktop: 2 },
 }: ResponsiveGridProps) {
-  const deviceType = useDeviceType();
-
-  const getGridCols = () => {
-    switch (deviceType) {
-      case "mobile":
-        return `grid-cols-${cols.mobile || 1}`;
-      case "tablet":
-        return `grid-cols-${cols.tablet || 2}`;
-      case "desktop":
-        return `grid-cols-${cols.desktop || 2}`;
+  // Map numbers to specific Tailwind classes to ensure they are included in the build
+  const getGridClass = (colCount: number) => {
+    switch (colCount) {
+      case 1:
+        return "grid-cols-1";
+      case 2:
+        return "grid-cols-2";
+      case 3:
+        return "grid-cols-3";
+      case 4:
+        return "grid-cols-4";
+      case 5:
+        return "grid-cols-5";
+      case 6:
+        return "grid-cols-6";
       default:
         return "grid-cols-1";
     }
   };
 
+  const mobileClass = getGridClass(cols.mobile || 1);
+  const tabletClass = `md:${getGridClass(cols.tablet || 2)}`;
+  const desktopClass = `lg:${getGridClass(cols.desktop || 2)}`;
+
   return (
-    <div className={`grid gap-4 ${getGridCols()} ${className}`}>{children}</div>
+    <div
+      className={`grid gap-4 ${mobileClass} ${tabletClass} ${desktopClass} ${className}`}
+    >
+      {children}
+    </div>
   );
 }
 

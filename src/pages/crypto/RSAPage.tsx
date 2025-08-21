@@ -392,8 +392,10 @@ export function RSAPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <ResponsiveGrid cols={{ mobile: 1, tablet: 2, desktop: 4 }}>
-              <div className="space-y-2">
-                <Label htmlFor="keySize">{t("tools.rsa.keySize")}</Label>
+              <div className="flex items-center space-x-3">
+                <Label htmlFor="keySize" className="min-w-0 flex-shrink-0">
+                  {t("tools.rsa.keySize")}
+                </Label>
                 <Select
                   value={options.keySize.toString()}
                   onValueChange={(value) =>
@@ -414,8 +416,10 @@ export function RSAPage() {
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="operation">{t("tools.rsa.operation")}</Label>
+              <div className="flex items-center space-x-3">
+                <Label htmlFor="operation" className="min-w-0 flex-shrink-0">
+                  {t("tools.rsa.operation")}
+                </Label>
                 <Select
                   value={operation}
                   onValueChange={(value) => setOperation(value as RSAOperation)}
@@ -523,7 +527,7 @@ export function RSAPage() {
         {/* Text Length Warning */}
         {operation === "encrypt" && (
           <Card className="border-yellow-200 bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-950">
-            <CardContent className="pt-4">
+            <CardContent>
               <p className="text-sm text-yellow-800 dark:text-yellow-200">
                 ⚠️{" "}
                 {t("tools.rsa.textLengthWarning", {
