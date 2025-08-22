@@ -106,7 +106,10 @@ export function JsonFormatterPage() {
   };
 
   return (
-    <ToolPage title={t("tools.json.title")} description={t("tools.json.description")}>
+    <ToolPage
+      title={t("tools.json.title")}
+      description={t("tools.json.description")}
+    >
       <Tabs defaultValue="format" className="w-full">
         <TabsList>
           <TabsTrigger value="format">{t("tools.json.format")}</TabsTrigger>
@@ -123,7 +126,9 @@ export function JsonFormatterPage() {
               {/* Configuration */}
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <Label htmlFor="indent-size">{t("tools.json.indentSize")}</Label>
+                  <Label htmlFor="indent-size">
+                    {t("tools.json.indentSize")}
+                  </Label>
                   <Select value={indentSize} onValueChange={setIndentSize}>
                     <SelectTrigger className="w-20">
                       <SelectValue />

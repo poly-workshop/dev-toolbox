@@ -17,7 +17,9 @@ export function JsonViewer({ value, placeholder, className }: JsonViewerProps) {
   // Determine actual theme - handle system theme detection
   const getActualTheme = () => {
     if (theme === "system") {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
     }
     return theme;
   };

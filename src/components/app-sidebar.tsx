@@ -61,19 +61,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: t("categories.generatorTools"),
         url: "#",
         icon: IconKey,
-        items: getRoutesByCategory("categories.generatorTools").map((route) => ({
-          title: t(route.titleKey),
-          url: route.path,
-        })),
+        items: getRoutesByCategory("categories.generatorTools").map(
+          (route) => ({
+            title: t(route.titleKey),
+            url: route.path,
+          }),
+        ),
       },
       {
         title: t("categories.converterTools"),
         url: "#",
         icon: IconTransform,
-        items: getRoutesByCategory("categories.converterTools").map((route) => ({
-          title: t(route.titleKey),
-          url: route.path,
-        })),
+        items: getRoutesByCategory("categories.converterTools").map(
+          (route) => ({
+            title: t(route.titleKey),
+            url: route.path,
+          }),
+        ),
       },
     ],
     navSecondary: [
