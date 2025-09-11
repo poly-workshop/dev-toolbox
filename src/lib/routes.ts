@@ -24,21 +24,22 @@ export const routes: RouteConfig[] = [
   },
 
   // Hash Tools
-  {
-    path: "/hash/md5",
-    titleKey: "routes.md5",
-    categoryKey: "categories.hashTools",
-  },
-  {
-    path: "/hash/sha256",
-    titleKey: "routes.sha256",
-    categoryKey: "categories.hashTools",
-  },
-  {
-    path: "/hash/sha512",
-    titleKey: "routes.sha512",
-    categoryKey: "categories.hashTools",
-  },
+  // TODO: Implement hash tools
+  // {
+  //   path: "/hash/md5",
+  //   titleKey: "routes.md5",
+  //   categoryKey: "categories.hashTools",
+  // },
+  // {
+  //   path: "/hash/sha256",
+  //   titleKey: "routes.sha256",
+  //   categoryKey: "categories.hashTools",
+  // },
+  // {
+  //   path: "/hash/sha512",
+  //   titleKey: "routes.sha512",
+  //   categoryKey: "categories.hashTools",
+  // },
 
   // Crypto Tools
   {
@@ -58,11 +59,12 @@ export const routes: RouteConfig[] = [
     titleKey: "routes.uuidGenerator",
     categoryKey: "categories.generatorTools",
   },
-  {
-    path: "/generators/password",
-    titleKey: "routes.passwordGenerator",
-    categoryKey: "categories.generatorTools",
-  },
+  // TODO: Implement password generator
+  // {
+  //   path: "/generators/password",
+  //   titleKey: "routes.passwordGenerator",
+  //   categoryKey: "categories.generatorTools",
+  // },
   {
     path: "/generators/qrcode",
     titleKey: "routes.qrcodeGenerator",
@@ -70,16 +72,17 @@ export const routes: RouteConfig[] = [
   },
 
   // Text Tools
-  {
-    path: "/text/formatter",
-    titleKey: "routes.textFormatter",
-    categoryKey: "categories.textTools",
-  },
-  {
-    path: "/text/counter",
-    titleKey: "routes.characterCounter",
-    categoryKey: "categories.textTools",
-  },
+  // TODO: Implement text tools
+  // {
+  //   path: "/text/formatter",
+  //   titleKey: "routes.textFormatter",
+  //   categoryKey: "categories.textTools",
+  // },
+  // {
+  //   path: "/text/counter",
+  //   titleKey: "routes.characterCounter",
+  //   categoryKey: "categories.textTools",
+  // },
 
   // Converter Tools
   {
@@ -87,23 +90,25 @@ export const routes: RouteConfig[] = [
     titleKey: "routes.timestampConverter",
     categoryKey: "categories.converterTools",
   },
-  {
-    path: "/converters/number",
-    titleKey: "routes.numberConverter",
-    categoryKey: "categories.converterTools",
-  },
+  // TODO: Implement number converter
+  // {
+  //   path: "/converters/number",
+  //   titleKey: "routes.numberConverter",
+  //   categoryKey: "categories.converterTools",
+  // },
 
   // Color Tools
-  {
-    path: "/color/picker",
-    titleKey: "routes.colorPicker",
-    categoryKey: "categories.colorTools",
-  },
-  {
-    path: "/color/converter",
-    titleKey: "routes.colorConverter",
-    categoryKey: "categories.colorTools",
-  },
+  // TODO: Implement color tools
+  // {
+  //   path: "/color/picker",
+  //   titleKey: "routes.colorPicker",
+  //   categoryKey: "categories.colorTools",
+  // },
+  // {
+  //   path: "/color/converter",
+  //   titleKey: "routes.colorConverter",
+  //   categoryKey: "categories.colorTools",
+  // },
 ];
 
 export const getRoutesByCategory = (categoryKey: string) => {
