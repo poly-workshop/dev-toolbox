@@ -1,0 +1,32 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="16" cy="16" r="15" fill="url(#bgGradient)" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+  
+  <!-- Wrench tool -->
+  <path d="M8 12l2-2 1.5 1.5L10 13l1.5 1.5L13 13l2 2-1 1-4-4-1-1z" fill="white" stroke="currentColor" stroke-width="0.3" opacity="0.9"/>
+  
+  <!-- Screwdriver -->
+  <path d="M20 8l2 2-1 1-1-1-1 1-1-1 2-2z M18 10l-6 6 1 1 6-6-1-1z" fill="white" stroke="currentColor" stroke-width="0.3" opacity="0.9"/>
+  
+  <!-- Gear/Cog -->
+  <g transform="translate(20, 20)">
+    <circle cx="0" cy="0" r="3" fill="none" stroke="white" stroke-width="1.2" opacity="0.9"/>
+    <circle cx="0" cy="0" r="1" fill="white" opacity="0.9"/>
+    <!-- Gear teeth -->
+    <rect x="-0.5" y="-4" width="1" height="1" fill="white" opacity="0.9"/>
+    <rect x="-0.5" y="3" width="1" height="1" fill="white" opacity="0.9"/>
+    <rect x="-4" y="-0.5" width="1" height="1" fill="white" opacity="0.9"/>
+    <rect x="3" y="-0.5" width="1" height="1" fill="white" opacity="0.9"/>
+  </g>
+  
+  <!-- Code brackets -->
+  <path d="M6 18l-2 2 2 2M10 18l2 2-2 2" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+</svg>

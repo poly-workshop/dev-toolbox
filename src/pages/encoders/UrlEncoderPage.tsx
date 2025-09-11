@@ -103,7 +103,7 @@ export function UrlEncoderPage() {
     try {
       await navigator.clipboard.writeText(text);
       toast.success(t("tools.base64.copySuccess"));
-    } catch (error) {
+    } catch {
       toast.error(t("tools.base64.copyError"));
     }
   };
@@ -126,7 +126,7 @@ export function UrlEncoderPage() {
           result = urlDecode(value, encodingType);
         }
         setOutput(result);
-      } catch (error) {
+      } catch {
         setOutput("");
       }
     } else {

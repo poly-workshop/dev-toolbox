@@ -4,13 +4,14 @@ import {
   // IconFileText, // Commented out - not used when text tools are hidden
   IconHash,
   // IconHelp, // Commented out - not used when help is hidden
-  IconInnerShadowTop,
   IconKey,
   IconLock,
   // IconPalette, // Commented out - not used when color tools are hidden
   // IconSettings, // Commented out - not used when settings is hidden
   IconTransform,
 } from "@tabler/icons-react";
+
+import DevToolboxLogo from "@/assets/dev-toolbox-logo.svg?react";
 import { useTranslation } from "react-i18next";
 
 import { getRoutesByCategory } from "@/lib/routes";
@@ -118,7 +119,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href="#" className="flex items-center gap-2">
-                <IconInnerShadowTop className="!size-4 sm:!size-5 flex-shrink-0" />
+                <DevToolboxLogo className="!size-4 sm:!size-5 flex-shrink-0" />
                 <span className="text-sm sm:text-base font-semibold truncate">
                   {t("header.title")}
                 </span>
