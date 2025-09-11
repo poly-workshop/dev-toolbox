@@ -1,14 +1,14 @@
 import * as React from "react";
 import {
   IconCode,
-  IconFileText,
+  // IconFileText, // Commented out - not used when text tools are hidden
   IconHash,
-  IconHelp,
+  // IconHelp, // Commented out - not used when help is hidden
   IconInnerShadowTop,
   IconKey,
   IconLock,
-  IconPalette,
-  IconSettings,
+  // IconPalette, // Commented out - not used when color tools are hidden
+  // IconSettings, // Commented out - not used when settings is hidden
   IconTransform,
 } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
@@ -81,28 +81,30 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
     ],
     navSecondary: [
-      {
-        title: t("common.settings"),
-        url: "/settings",
-        icon: IconSettings,
-      },
-      {
-        title: t("common.help"),
-        url: "/help",
-        icon: IconHelp,
-      },
+      // TODO: Implement settings and help pages
+      // {
+      //   title: t("common.settings"),
+      //   url: "/settings",
+      //   icon: IconSettings,
+      // },
+      // {
+      //   title: t("common.help"),
+      //   url: "/help",
+      //   icon: IconHelp,
+      // },
     ],
     documents: [
-      {
-        name: t("categories.textTools"),
-        url: "/text",
-        icon: IconFileText,
-      },
-      {
-        name: t("categories.colorTools"),
-        url: "/color",
-        icon: IconPalette,
-      },
+      // TODO: Implement text and color tools
+      // {
+      //   name: t("categories.textTools"),
+      //   url: "/text",
+      //   icon: IconFileText,
+      // },
+      // {
+      //   name: t("categories.colorTools"),
+      //   url: "/color",
+      //   icon: IconPalette,
+      // },
     ],
   };
 
@@ -130,8 +132,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           items={data.navMain}
           title={t("sidebar.encodingTools")}
         />
-        <NavSimple items={data.documents} title={t("sidebar.documents")} />
-        <NavSimple items={data.navSecondary} className="mt-auto" />
+        {data.documents.length > 0 && (
+          <NavSimple items={data.documents} title={t("sidebar.documents")} />
+        )}
+        {data.navSecondary.length > 0 && (
+          <NavSimple items={data.navSecondary} className="mt-auto" />
+        )}
       </SidebarContent>
     </Sidebar>
   );
